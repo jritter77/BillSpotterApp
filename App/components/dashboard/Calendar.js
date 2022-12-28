@@ -1,16 +1,30 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Bubble from "./Bubble";
+import Bubble from "../standard/Bubble";
 
 const Calendar = () => {
   function populateDates() {
     const rows = [];
 
+    const date = new Date();
+    date.setDate(1);
+
+    const month = date.getMonth();
+
     for (let r = 0; r < 5; r++) {
       const dates = [];
 
       for (let c = 0; c < 7; c++) {
-        dates.push(<Date key={7 * r + c} date={7 * r + c} />);
+        let d = "";
+
+        if (date.getMonth() === month && 7 * r + c >= date.getDay()) {
+          d = date.getDate();
+          date.setDate(date.getDate() + 1);
+        } else {
+          d = "";
+        }
+
+        dates.push(<Col key={7 * r + c} date={d} />);
       }
 
       rows.push(<Row key={r} dates={dates} />);
@@ -26,7 +40,7 @@ const Row = ({ dates }) => {
   return <View style={styles.row}>{dates}</View>;
 };
 
-const Date = ({ date }) => {
+const Col = ({ date }) => {
   return <Text style={styles.date}>{date}</Text>;
 };
 

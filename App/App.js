@@ -7,12 +7,14 @@ import MyBills from "./views/MyBills";
 import MyPayments from "./views/MyPayments";
 import Summary from "./views/Summary";
 
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={screenOptions}>
         <Tab.Screen name="Dashboard" component={Dashboard} />
         <Tab.Screen name="MyBills" component={MyBills} />
         <Tab.Screen name="MyPayments" component={MyPayments} />
@@ -21,6 +23,30 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+const screenOptions = ({ route }) => ({
+  tabBarIcon: ({ focused, color, size }) => {
+    let iconName;
+
+    if (route.name === "Dashboard") {
+      iconName = "md-home";
+    } else if (route.name === "MyBills") {
+      iconName = "file-tray-full";
+    } else if (route.name === "MyPayments") {
+      iconName = "cash";
+    } else if (route.name === "Summary") {
+      iconName = "bar-chart";
+    }
+
+    return (
+      <Ionicons
+        name={iconName}
+        size={24}
+        color={focused ? "#006600" : "#8e8e93"}
+      />
+    );
+  },
+});
 
 const styles = StyleSheet.create({
   container: {

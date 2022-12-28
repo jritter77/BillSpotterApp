@@ -1,6 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
+/**
+ * It takes in a title and children, and returns a view with a title and content.
+ * @returns A component that is a view with a title and content.
+ */
 const Bubble = ({ title, children }) => {
   return (
     <View style={styles.container}>

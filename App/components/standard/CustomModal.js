@@ -1,6 +1,11 @@
 import { Button, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
+/**
+ * It's a custom modal component that takes in a few props and returns a modal that can be toggled on
+ * and off.
+ * @returns A custom modal component that can be used in any other component.
+ */
 const CustomModal = ({
   content,
   onClose,
