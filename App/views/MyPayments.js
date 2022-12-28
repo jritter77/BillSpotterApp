@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import CustomScrollView from "../components/standard/CustomScrollView";
 
 const MyPayments = () => {
   return (
-    <View>
+    <CustomScrollView>
       <Text>MyPayments</Text>
-    </View>
+    </CustomScrollView>
   );
 };
 
