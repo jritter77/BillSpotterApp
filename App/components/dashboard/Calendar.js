@@ -7,6 +7,7 @@ import Bubble from "../standard/Bubble";
  * @returns A function that returns a component.
  */
 const Calendar = () => {
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const [month, setMonth] = React.useState(new Date().getMonth());
   const [year, setYear] = React.useState(new Date().getFullYear());
 
@@ -50,7 +51,7 @@ const Calendar = () => {
             year={year}
             setYear={setYear}
           />
-          <Text style={styles.headerTitle}>Calendar</Text>
+          <Text style={styles.headerTitle}>{monthNames[month]} - {year}</Text>
           <NextDateBtn
             month={month}
             setMonth={setMonth}
