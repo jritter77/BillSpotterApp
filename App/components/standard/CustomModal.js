@@ -7,15 +7,15 @@ import React from "react";
  * @returns A custom modal component that can be used in any other component.
  */
 const CustomModal = ({
-  content,
+  children,
   onClose,
   style,
   toggleBtnStyle,
   toggleBtnTitle,
   toggleBtnTextStyle,
+  modalVisible,
+  setModalVisible,
 }) => {
-  const [modalVisible, setModalVisible] = React.useState(false);
-
   return (
     <View style={{ ...styles.container, ...style }}>
       <Modal
@@ -25,7 +25,7 @@ const CustomModal = ({
           setModalVisible(!modalVisible);
         }}
       >
-        {content}
+        {children}
       </Modal>
       <Pressable
         onPress={() => setModalVisible(!modalVisible)}

@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import NewBillBtn from "../components/bills/NewBillBtn";
 
 const MyBills = () => {
   return (
     <View>
-      <Text>MyBills</Text>
+      <NewBillBtn />
     </View>
   );
 };

@@ -1,11 +1,13 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import CustomForm from "../standard/CustomForm";
+import PickerInput from "../standard/PickerInput";
+import DatePicker from "../standard/DatePicker";
 
 const BillForm = () => {
   const [billName, setBillName] = React.useState("");
-  const [billType, setBillType] = React.useState("");
-  const [billFreq, setBillFreq] = React.useState("");
+  const [billType, setBillType] = React.useState("Home");
+  const [billFreq, setBillFreq] = React.useState("Monthly");
   const [billDue, setBillDue] = React.useState("");
   const [billAmt, setBillAmt] = React.useState("");
 
@@ -18,15 +20,23 @@ const BillForm = () => {
     <View>
       <CustomForm onSubmit={onSubmit}>
         <Text>Bill Name</Text>
-        <TextInput placeholder="Name of bill" />
+        <TextInput placeholder="Name of bill" onChangeText={setBillName} />
         <Text>Bill Type</Text>
-        <TextInput placeholder="Type" />
+        <PickerInput
+          value={billType}
+          setValue={setBillType}
+          options={["Home", "Auto", "Medical"]}
+        />
         <Text>Bill Frequency</Text>
-        <TextInput placeholder="Freq" />
+        <PickerInput
+          value={billFreq}
+          setValue={setBillFreq}
+          options={["Weekly", "Monthly", "Yearly"]}
+        />
         <Text>Bill Due Date</Text>
-        <TextInput placeholder="Date" />
+        <DatePicker />
         <Text>Bill Amount Due</Text>
-        <TextInput placeholder="Amount" />
+        <TextInput placeholder="Amount" onChangeText={setBillAmt} />
       </CustomForm>
     </View>
   );
