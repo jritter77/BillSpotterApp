@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   toggleBtn: {
-    backgroundColor: "blue",
+    backgroundColor: "green",
     padding: 16,
     borderRadius: 5,
   },

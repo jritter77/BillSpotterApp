@@ -19,9 +19,10 @@ export default Bubble;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 5,
+    borderWidth: 15,
     borderRadius: 5,
     margin: "5%",
+    borderColor: 'black'
   },
   title: {
     backgroundColor: "black",
