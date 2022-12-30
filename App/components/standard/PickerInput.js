@@ -1,6 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import CustomModal from "./CustomModal";
+
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const PickerInput = ({ value, setValue, options }) => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -24,11 +32,22 @@ const PickerInput = ({ value, setValue, options }) => {
 
   return (
     <CustomModal
-      toggleBtnTitle={value}
+      toggleContent={
+        <View style={styles.toggleContent}>
+          <Text style={styles.toggleText}>{value}</Text>
+          <Ionicons name="caret-down" size={16} />
+        </View>
+      }
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
+      transparent={true}
+      animationType={"fade"}
+      toggleBtnStyle={styles.btnStyle}
+      toggleBtnTextStyle={styles.btnTextStyle}
     >
-      {populateOptionButtons()}
+      <ScrollView contentContainerStyle={styles.container}>
+        {populateOptionButtons()}
+      </ScrollView>
     </CustomModal>
   );
 };
@@ -36,16 +55,53 @@ const PickerInput = ({ value, setValue, options }) => {
 const PickerOption = ({ value, setValue, setModalVisible }) => {
   return (
     <TouchableOpacity
+      style={styles.option}
       onPress={() => {
         setValue(value);
         setModalVisible(false);
       }}
     >
-      <Text>{value}</Text>
+      <Text style={styles.optionText}>{value}</Text>
     </TouchableOpacity>
   );
 };
 
 export default PickerInput;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    minHeight: "100%",
+    backgroundColor: "rgba(0, 0, 0, .5)",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: "10%",
+    paddingBottom: "10%",
+  },
+  option: {
+    backgroundColor: "white",
+    padding: 16,
+    width: "70%",
+    borderWidth: 1,
+    borderColor: "lightgrey",
+  },
+  optionText: {
+    fontSize: 20,
+  },
+  btnStyle: {
+    backgroundColor: "white",
+    borderColor: "lightblue",
+    borderWidth: 2,
+  },
+  btnTextStyle: {
+    color: "black",
+  },
+  toggleContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  toggleText: {
+    fontSize: 16,
+    marginRight: 16,
+  },
+});

@@ -1,29 +1,51 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import CustomModal from "./CustomModal";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Dial from "./Dial";
+import PickerInput from "./PickerInput";
 
 const DatePicker = ({ value, setValue }) => {
-  const [modalVisible, setModalVisible] = React.useState(false);
-
   const [year, setYear] = React.useState(new Date().getFullYear());
-  const [month, setMonth] = React.useState(new Date().getMonth());
+  const [month, setMonth] = React.useState(new Date().getMonth() + 1);
   const [date, setDate] = React.useState(new Date().getDate());
 
+  const monthOptions = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  const yearOptions = [];
+  const dayOptions = [];
+
+  for (let i = 0; i < 20; i++) {
+    yearOptions.push(new Date().getFullYear() + i);
+  }
+
+  for (let i = 0; i < getMonthDays(year, month - 1); i++) {
+    dayOptions.push((i + 1).toString().padStart(2, 0));
+  }
+
+  React.useEffect(() => {
+    if (date > getMonthDays(year, month - 1)) {
+      setDate(getMonthDays(year, month - 1));
+    }
+    setValue({ month: parseInt(month) - 1, date: date, year: year });
+  }, [date, month, year]);
+
   return (
-    <CustomModal
-      modalVisible={modalVisible}
-      setModalVisible={setModalVisible}
-      toggleBtnTitle={<Ionicons name={"md-calendar"} size={24} color="white" />}
-    >
-      <View style={styles.container}>
-        <Dial values={["", 0, 1, 2, 3, 4, 5, 6, "", ""]} />
-        <Dial values={["", 0, 1, 2, 3, 4, 5, 6, "", ""]} />
-        <Dial values={["", 0, 1, 2, 3, 4, 5, 6, "", ""]} />
-      </View>
-    </CustomModal>
+    <View style={styles.container}>
+      <PickerInput value={month} setValue={setMonth} options={monthOptions} />
+      <PickerInput value={date} setValue={setDate} options={dayOptions} />
+      <PickerInput value={year} setValue={setYear} options={yearOptions} />
+    </View>
   );
 };
 
@@ -37,6 +59,5 @@ export default DatePicker;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    height: 300,
   },
 });

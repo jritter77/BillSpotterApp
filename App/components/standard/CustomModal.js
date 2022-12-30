@@ -15,10 +15,15 @@ const CustomModal = ({
   toggleBtnTextStyle,
   modalVisible,
   setModalVisible,
+  transparent,
+  animationType,
+  toggleContent,
 }) => {
   return (
     <View style={{ ...styles.container, ...style }}>
       <Modal
+        transparent={transparent}
+        animationType={animationType}
         visible={modalVisible}
         onRequestClose={() => {
           onClose?.();
@@ -31,9 +36,12 @@ const CustomModal = ({
         onPress={() => setModalVisible(!modalVisible)}
         style={{ ...styles.toggleBtn, ...toggleBtnStyle }}
       >
-        <Text style={{ ...styles.toggleBtnText, ...toggleBtnTextStyle }}>
-          {toggleBtnTitle}
-        </Text>
+        {!toggleContent && (
+          <Text style={{ ...styles.toggleBtnText, ...toggleBtnTextStyle }}>
+            {toggleBtnTitle}
+          </Text>
+        )}
+        {toggleContent}
       </Pressable>
     </View>
   );
@@ -42,16 +50,17 @@ const CustomModal = ({
 export default CustomModal;
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-  },
+  container: {},
   toggleBtn: {
     backgroundColor: "green",
-    padding: 16,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 5,
   },
   toggleBtnText: {
     color: "white",
-    fontSize: 20,
+    fontSize: 16,
   },
 });

@@ -8,6 +8,7 @@ import MyPayments from "./views/MyPayments";
 import Summary from "./views/Summary";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import NewBillBtn from "./components/bills/NewBillBtn";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +17,11 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
         <Tab.Screen name="Dashboard" component={Dashboard} />
-        <Tab.Screen name="MyBills" component={MyBills} />
+        <Tab.Screen
+          name="MyBills"
+          component={MyBills}
+          options={{ headerRight: () => <NewBillBtn /> }}
+        />
         <Tab.Screen name="MyPayments" component={MyPayments} />
         <Tab.Screen name="Summary" component={Summary} />
       </Tab.Navigator>

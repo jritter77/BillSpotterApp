@@ -8,9 +8,11 @@ const NewBillBtn = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <CustomModal
-      toggleBtnTitle="Create New Bill"
+      toggleBtnTitle="New +"
+      toggleBtnStyle={styles.toggleBtnStyle}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
+      animationType={"slide"}
     >
       <BillForm />
     </CustomModal>
@@ -19,4 +21,8 @@ const NewBillBtn = () => {
 
 export default NewBillBtn;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  toggleBtnStyle: {
+    marginRight: "5%",
+  },
+});

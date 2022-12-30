@@ -10,8 +10,8 @@ const CustomForm = ({ children, onSubmit }) => {
   return (
     <View>
       {children}
-      <TouchableOpacity onPress={onSubmit}>
-        <Text>Submit</Text>
+      <TouchableOpacity style={styles.submit} onPress={onSubmit}>
+        <Text style={styles.submitText}>Submit</Text>
       </TouchableOpacity>
     </View>
   );
@@ -19,4 +19,17 @@ const CustomForm = ({ children, onSubmit }) => {
 
 export default CustomForm;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  submit: {
+    backgroundColor: "green",
+    padding: 16,
+    borderRadius: 5,
+    width: "50%",
+    marginTop: "10%",
+  },
+  submitText: {
+    color: "white",
+    fontSize: 24,
+    textAlign: "center",
+  },
+});
