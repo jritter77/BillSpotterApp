@@ -44,19 +44,19 @@ const Calendar = () => {
     <Bubble
       header={
         <View style={styles.header}>
-          <PrevDateBtn
+          {/* <PrevDateBtn
             month={month}
             setMonth={setMonth}
             year={year}
             setYear={setYear}
-          />
+          /> */}
           <Text style={styles.headerTitle}>Calendar</Text>
-          <NextDateBtn
+          {/* <NextDateBtn
             month={month}
             setMonth={setMonth}
             year={year}
             setYear={setYear}
-          />
+          /> */}
         </View>
       }
     >
