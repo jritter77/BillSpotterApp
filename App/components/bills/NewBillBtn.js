@@ -4,7 +4,7 @@ import CustomModal from "../standard/CustomModal";
 import CustomForm from "../standard/CustomForm";
 import BillForm from "./BillForm";
 
-const NewBillBtn = () => {
+const NewBillBtn = ({ setBills }) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <CustomModal
@@ -14,7 +14,7 @@ const NewBillBtn = () => {
       setModalVisible={setModalVisible}
       animationType={"slide"}
     >
-      <BillForm />
+      <BillForm setModalVisible={setModalVisible} setBills={setBills} />
     </CustomModal>
   );
 };

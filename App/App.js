@@ -10,21 +10,28 @@ import Summary from "./views/Summary";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import NewBillBtn from "./components/bills/NewBillBtn";
 import React from "react";
-import { getBills, setBills } from "./models/Bills";
+import { getStoredBills, setStoredBills } from "./models/Bills";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [bills, setBills] = React.useState([]);
+
   React.useEffect(() => {
     const checkBillsExists = async () => {
-      const result = await getBills();
+      const result = await getStoredBills();
       if (!result) {
-        await setBills({});
+        await setStoredBills([]);
       }
     };
 
+    const getBills = async () => {
+      setBills(await getStoredBills());
+    };
+
     checkBillsExists();
+    getBills();
   }, []);
 
   return (
@@ -33,8 +40,10 @@ export default function App() {
         <Tab.Screen name="Dashboard" component={Dashboard} />
         <Tab.Screen
           name="MyBills"
-          component={MyBills}
-          options={{ headerRight: NewBillBtn }}
+          children={(props) => (
+            <MyBills bills={bills} setBills={setBills} {...props}></MyBills>
+          )}
+          options={{ headerRight: () => <NewBillBtn setBills={setBills} /> }}
         />
         <Tab.Screen name="MyPayments" component={MyPayments} />
         <Tab.Screen name="Summary" component={Summary} />

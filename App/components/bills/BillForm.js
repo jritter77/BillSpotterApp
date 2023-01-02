@@ -4,17 +4,32 @@ import CustomForm from "../standard/CustomForm";
 import PickerInput from "../standard/PickerInput";
 import DatePicker from "../standard/DatePicker";
 import FormTextInput from "../standard/FormTextInput";
+import {
+  createNewBill,
+  getStoredBills,
+  setStoredBills,
+} from "../../models/Bills";
 
-const BillForm = () => {
+const BillForm = ({ setModalVisible, setBills }) => {
   const [billName, setBillName] = React.useState("");
   const [billType, setBillType] = React.useState("Home");
   const [billFreq, setBillFreq] = React.useState("Monthly");
   const [billDue, setBillDue] = React.useState("");
   const [billAmt, setBillAmt] = React.useState("");
 
-  const onSubmit = () => {
-    const values = { billName, billType, billFreq, billDue, billAmt };
-    console.log(values);
+  const onSubmit = async () => {
+    const newBill = createNewBill(
+      billName,
+      billType,
+      billFreq,
+      billDue,
+      billAmt
+    );
+    const bills = await getStoredBills();
+    bills.push(newBill);
+    await setStoredBills(bills);
+    setBills(bills);
+    setModalVisible(false);
   };
 
   return (

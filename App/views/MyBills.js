@@ -2,28 +2,20 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import NewBillBtn from "../components/bills/NewBillBtn";
 import CustomScrollView from "../components/standard/CustomScrollView";
-import { getBills } from "../models/Bills";
+import { getStoredBills } from "../models/Bills";
 import BillInfo from "../components/bills/BillInfo";
 
-const MyBills = () => {
-  const [bills, setBills] = React.useState({});
+const MyBills = ({ bills, setBills }) => {
+  function populateBills() {
+    const billComps = [];
+    for (let [i, bill] of bills.entries()) {
+      let bc = <BillInfo key={i} index={i} setBills={setBills} {...bill} />;
+      billComps.push(bc);
+    }
+    return billComps;
+  }
 
-  React.useEffect(() => {
-    const updateBills = async () => {
-      const result = await getBills();
-      if (result) {
-        setBills(result);
-      }
-    };
-
-    updateBills();
-  }, []);
-
-  return (
-    <CustomScrollView>
-      <BillInfo />
-    </CustomScrollView>
-  );
+  return <CustomScrollView>{populateBills()}</CustomScrollView>;
 };
 
 export default MyBills;

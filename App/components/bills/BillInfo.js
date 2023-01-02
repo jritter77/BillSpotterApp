@@ -7,13 +7,22 @@ import {
 } from "react-native";
 import React from "react";
 import Bubble from "../standard/Bubble";
+import { getStoredBills, setStoredBills } from "../../models/Bills";
 
-const BillInfo = () => {
-  const [collapsed, setCollapsed] = React.useState(false);
+const BillInfo = ({
+  index,
+  billName,
+  billType,
+  billFreq,
+  billDue,
+  billAmt,
+  setBills,
+}) => {
+  const [collapsed, setCollapsed] = React.useState(true);
 
   const BillHeader = () => (
     <Pressable style={styles.header} onPress={() => setCollapsed(!collapsed)}>
-      <Text style={styles.headerText}>Rent</Text>
+      <Text style={styles.headerText}>{billName}</Text>
       <Text style={styles.headerText}>{collapsed ? "+" : "-"}</Text>
     </Pressable>
   );
@@ -25,10 +34,17 @@ const BillInfo = () => {
   );
 
   const DeleteBillBtn = () => (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} onPress={handleDelete}>
       <Text style={styles.buttonText}>Delete</Text>
     </TouchableOpacity>
   );
+
+  async function handleDelete() {
+    const bills = await getStoredBills();
+    bills.splice(index, 1);
+    await setStoredBills(bills);
+    setBills(await getStoredBills());
+  }
 
   return (
     <Bubble header={<BillHeader />}>
@@ -36,21 +52,23 @@ const BillInfo = () => {
         <View style={styles.row}>
           <View style={styles.col}>
             <Text style={styles.label}>Bill Type:</Text>
-            <Text>Home</Text>
+            <Text>{billType}</Text>
           </View>
           <View style={styles.col}>
             <Text style={styles.label}>Bill Frequency:</Text>
-            <Text>Monthly</Text>
+            <Text>{billFreq}</Text>
           </View>
         </View>
         <View style={styles.row}>
           <View style={styles.col}>
             <Text style={styles.label}>Bill Due Date:</Text>
-            <Text>01/01/2023</Text>
+            <Text>
+              {billDue.month + 1}/{billDue.date}/{billDue.year}
+            </Text>
           </View>
           <View style={styles.col}>
             <Text style={styles.label}>Bill Amount Due:</Text>
-            <Text>$625.00</Text>
+            <Text>{billAmt}</Text>
           </View>
         </View>
         <View style={styles.row}>
