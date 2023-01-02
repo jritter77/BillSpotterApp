@@ -9,10 +9,24 @@ import Summary from "./views/Summary";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import NewBillBtn from "./components/bills/NewBillBtn";
+import React from "react";
+import { getBills, setBills } from "./models/Bills";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+  React.useEffect(() => {
+    const checkBillsExists = async () => {
+      const result = await getBills();
+      if (!result) {
+        await setBills({});
+      }
+    }
+
+    setBills({stuff: 'this'})
+  }, []);
+
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
@@ -20,7 +34,7 @@ export default function App() {
         <Tab.Screen
           name="MyBills"
           component={MyBills}
-          options={{ headerRight: () => <NewBillBtn /> }}
+          options={{ headerRight: NewBillBtn }}
         />
         <Tab.Screen name="MyPayments" component={MyPayments} />
         <Tab.Screen name="Summary" component={Summary} />
