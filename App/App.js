@@ -11,20 +11,20 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import NewBillBtn from "./components/bills/NewBillBtn";
 import React from "react";
 import { getBills, setBills } from "./models/Bills";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-
   React.useEffect(() => {
     const checkBillsExists = async () => {
       const result = await getBills();
       if (!result) {
         await setBills({});
       }
-    }
+    };
 
-    setBills({stuff: 'this'})
+    checkBillsExists();
   }, []);
 
   return (

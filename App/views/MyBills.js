@@ -3,9 +3,9 @@ import React from "react";
 import NewBillBtn from "../components/bills/NewBillBtn";
 import CustomScrollView from "../components/standard/CustomScrollView";
 import { getBills } from "../models/Bills";
+import BillInfo from "../components/bills/BillInfo";
 
 const MyBills = () => {
-
   const [bills, setBills] = React.useState({});
 
   React.useEffect(() => {
@@ -14,12 +14,16 @@ const MyBills = () => {
       if (result) {
         setBills(result);
       }
-    }
+    };
 
     updateBills();
   }, []);
 
-  return <CustomScrollView></CustomScrollView>;
+  return (
+    <CustomScrollView>
+      <BillInfo />
+    </CustomScrollView>
+  );
 };
 
 export default MyBills;

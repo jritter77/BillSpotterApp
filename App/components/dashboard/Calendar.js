@@ -58,21 +58,9 @@ const Calendar = () => {
     <Bubble
       header={
         <View style={styles.header}>
-          {/* <PrevDateBtn
-            month={month}
-            setMonth={setMonth}
-            year={year}
-            setYear={setYear}
-          /> */}
           <Text style={styles.headerTitle}>
             {monthNames[month]} - {year}
           </Text>
-          {/* <NextDateBtn
-            month={month}
-            setMonth={setMonth}
-            year={year}
-            setYear={setYear}
-          /> */}
         </View>
       }
     >
