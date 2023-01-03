@@ -51,7 +51,8 @@ const BillInfo = (props) => {
   }
 
   return (
-    <Bubble header={<BillHeader />}>
+    <View style={styles.container}>
+      <BillHeader />
       <View style={{ display: collapsed ? "none" : "flex" }}>
         <View style={styles.row}>
           <View style={styles.col}>
@@ -80,7 +81,7 @@ const BillInfo = (props) => {
           <DeleteBillBtn />
         </View>
       </View>
-    </Bubble>
+    </View>
   );
 };
 
@@ -119,5 +120,11 @@ const styles = StyleSheet.create({
   },
   col: {
     flex: 1,
+  },
+  container: {
+    backgroundColor: "white",
+    borderRadius: 5,
+    margin: "5%",
+    borderWidth: 10,
   },
 });
