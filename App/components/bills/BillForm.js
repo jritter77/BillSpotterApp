@@ -27,7 +27,7 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
         billDue,
         billAmt
       );
-      bills.push(newBill);
+      bills.unshift(newBill);
     } else {
       bills[index] = {
         ...bills[index],

@@ -37,7 +37,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Dashboard" component={Dashboard} />
+        <Tab.Screen
+          name="Dashboard"
+          children={(props) => (
+            <Dashboard bills={bills} setBills={setBills} {...props} />
+          )}
+        />
         <Tab.Screen
           name="MyBills"
           children={(props) => (
@@ -45,7 +50,12 @@ export default function App() {
           )}
           options={{ headerRight: () => <NewBillBtn setBills={setBills} /> }}
         />
-        <Tab.Screen name="MyPayments" component={MyPayments} />
+        <Tab.Screen
+          name="MyPayments"
+          children={(props) => (
+            <MyPayments bills={bills} setBills={setBills} {...props} />
+          )}
+        />
         <Tab.Screen name="Summary" component={Summary} />
       </Tab.Navigator>
     </NavigationContainer>

@@ -22,13 +22,14 @@ const styles = StyleSheet.create({
     borderWidth: 15,
     borderRadius: 5,
     margin: "5%",
-    borderColor: 'black'
+    borderColor: "black",
   },
   title: {
     backgroundColor: "black",
     color: "white",
     fontSize: 20,
     textAlign: "center",
+    fontWeight: "bold",
   },
   content: {
     backgroundColor: "white",
