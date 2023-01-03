@@ -1,4 +1,12 @@
-import { Button, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 
 /**
@@ -32,7 +40,7 @@ const CustomModal = ({
       >
         {children}
       </Modal>
-      <Pressable
+      <TouchableOpacity
         onPress={() => setModalVisible(!modalVisible)}
         style={{ ...styles.toggleBtn, ...toggleBtnStyle }}
       >
@@ -42,7 +50,7 @@ const CustomModal = ({
           </Text>
         )}
         {toggleContent}
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

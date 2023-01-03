@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import CustomScrollView from "../components/standard/CustomScrollView";
+import NextDue from "../components/bills/NextDue";
+import PreviousPayments from "../components/bills/PreviousPayments";
 
-const MyPayments = () => {
+const MyPayments = ({ bills, setBills }) => {
   return (
     <CustomScrollView>
-      <Text>MyPayments</Text>
+      <NextDue bills={bills} setBills={setBills} />
+      <PreviousPayments bills={bills} setBills={setBills} />
     </CustomScrollView>
   );
 };

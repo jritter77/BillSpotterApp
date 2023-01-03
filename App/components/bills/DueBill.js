@@ -7,8 +7,11 @@ import {
 } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import CustomModal from "../standard/CustomModal";
+import PaymentForm from "./PaymentForm";
 
-const DueBill = ({ bill }) => {
+const DueBill = ({ bill, setBills, index }) => {
+  const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <View style={styles.container}>
       <View style={styles.dateAndName}>
@@ -18,9 +21,22 @@ const DueBill = ({ bill }) => {
         <Text style={styles.nameField}>{bill.billName}</Text>
       </View>
       <Text style={styles.amtField}>${bill.billAmt}.00</Text>
-      <TouchableOpacity style={styles.confirmPaid}>
-        <Ionicons name="checkmark-circle-outline" size={40} color="green" />
-      </TouchableOpacity>
+
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        toggleBtnTitle={
+          <Ionicons name="checkmark-circle-outline" size={40} color="green" />
+        }
+        toggleBtnStyle={styles.confirmPaid}
+      >
+        <PaymentForm
+          setModalVisible={setModalVisible}
+          setBills={setBills}
+          bill={bill}
+          index={index}
+        />
+      </CustomModal>
     </View>
   );
 };
@@ -32,7 +48,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     alignItems: "center",
-    margin: "5%",
+    justifyContent: "space-between",
+    paddingLeft: "5%",
+    paddingTop: "5%",
   },
   dateField: {
     fontSize: 16,
@@ -49,8 +67,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   confirmPaid: {
-    flex: 1,
     alignItems: "center",
+    backgroundColor: "white",
+    marginLeft: "10%",
   },
   dateAndName: {
     flex: 1,

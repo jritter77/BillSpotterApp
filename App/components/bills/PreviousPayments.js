@@ -2,17 +2,24 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Bubble from "../standard/Bubble";
 import DueBill from "./DueBill";
+import Payment from "./Payment";
 
-const NextDue = ({ bills, setBills }) => {
+const PreviousPayments = ({ bills, setBills }) => {
   const limit = bills.length > 3 ? 3 : bills.length;
 
   const populateDueBills = () => {
     const dueBills = [];
 
     for (let i = 0; i < bills.length; i++) {
-      if (!bills[i].billPaid) {
+      if (bills[i].billPaid) {
         dueBills.push(
-          <DueBill key={i} bill={bills[i]} setBills={setBills} index={i} />
+          <Payment
+            key={i}
+            bill={bills[i]}
+            setBills={setBills}
+            bills={bills}
+            index={i}
+          />
         );
 
         if (dueBills.length >= limit) {
@@ -34,7 +41,7 @@ const NextDue = ({ bills, setBills }) => {
   );
 };
 
-export default NextDue;
+export default PreviousPayments;
 
 const styles = StyleSheet.create({
   btnText: {

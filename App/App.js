@@ -48,13 +48,17 @@ export default function App() {
           children={(props) => (
             <MyBills bills={bills} setBills={setBills} {...props}></MyBills>
           )}
-          options={{ headerRight: () => <NewBillBtn setBills={setBills} /> }}
+          options={{
+            headerRight: () => <NewBillBtn setBills={setBills} />,
+            title: "My Bills",
+          }}
         />
         <Tab.Screen
           name="MyPayments"
           children={(props) => (
             <MyPayments bills={bills} setBills={setBills} {...props} />
           )}
+          options={{ title: "My Payments" }}
         />
         <Tab.Screen name="Summary" component={Summary} />
       </Tab.Navigator>
