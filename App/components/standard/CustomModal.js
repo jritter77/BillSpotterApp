@@ -52,11 +52,7 @@ export default CustomModal;
 const styles = StyleSheet.create({
   container: {},
   toggleBtn: {
-    backgroundColor: "green",
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 10,
-    paddingBottom: 10,
+    backgroundColor: "black",
     borderRadius: 5,
   },
   toggleBtnText: {

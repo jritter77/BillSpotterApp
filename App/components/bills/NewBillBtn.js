@@ -24,5 +24,7 @@ export default NewBillBtn;
 const styles = StyleSheet.create({
   toggleBtnStyle: {
     marginRight: "5%",
+    backgroundColor: "green",
+    padding: 8,
   },
 });

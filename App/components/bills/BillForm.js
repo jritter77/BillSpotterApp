@@ -10,33 +10,59 @@ import {
   setStoredBills,
 } from "../../models/Bills";
 
-const BillForm = ({ setModalVisible, setBills }) => {
+const BillForm = ({ setModalVisible, setBills, bill, index }) => {
   const [billName, setBillName] = React.useState("");
   const [billType, setBillType] = React.useState("Home");
   const [billFreq, setBillFreq] = React.useState("Monthly");
-  const [billDue, setBillDue] = React.useState("");
+  const [billDue, setBillDue] = React.useState(bill?.billDue);
   const [billAmt, setBillAmt] = React.useState("");
 
   const onSubmit = async () => {
-    const newBill = createNewBill(
-      billName,
-      billType,
-      billFreq,
-      billDue,
-      billAmt
-    );
     const bills = await getStoredBills();
-    bills.push(newBill);
+    if (!bill) {
+      const newBill = createNewBill(
+        billName,
+        billType,
+        billFreq,
+        billDue,
+        billAmt
+      );
+      bills.push(newBill);
+    } else {
+      bills[index] = {
+        ...bills[index],
+        billName,
+        billType,
+        billFreq,
+        billDue,
+        billAmt,
+      };
+    }
+
     await setStoredBills(bills);
     setBills(bills);
     setModalVisible(false);
   };
 
+  React.useEffect(() => {
+    if (bill) {
+      setBillName(bill.billName);
+      setBillType(bill.billType);
+      setBillFreq(bill.billFreq);
+      setBillDue(bill.billDue);
+      setBillAmt(bill.billAmt);
+    }
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <CustomForm onSubmit={onSubmit}>
         <Text style={styles.label}>Bill Name</Text>
-        <FormTextInput placeholder="Name of bill" onChangeText={setBillName} />
+        <FormTextInput
+          placeholder="Name of bill"
+          value={billName}
+          onChangeText={setBillName}
+        />
         <Text style={styles.label}>Bill Type</Text>
         <PickerInput
           value={billType}
@@ -52,7 +78,11 @@ const BillForm = ({ setModalVisible, setBills }) => {
         <Text style={styles.label}>Bill Due Date</Text>
         <DatePicker value={billDue} setValue={setBillDue} />
         <Text style={styles.label}>Bill Amount Due</Text>
-        <FormTextInput placeholder="Amount" onChangeText={setBillAmt} />
+        <FormTextInput
+          placeholder="Amount"
+          value={billAmt}
+          onChangeText={setBillAmt}
+        />
       </CustomForm>
     </ScrollView>
   );

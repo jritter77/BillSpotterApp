@@ -9,7 +9,7 @@ const MyBills = ({ bills, setBills }) => {
   function populateBills() {
     const billComps = [];
     for (let [i, bill] of bills.entries()) {
-      let bc = <BillInfo key={i} index={i} setBills={setBills} {...bill} />;
+      let bc = <BillInfo key={i} index={i} setBills={setBills} bill={bill} />;
       billComps.push(bc);
     }
     return billComps;

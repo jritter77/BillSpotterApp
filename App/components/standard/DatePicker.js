@@ -5,8 +5,12 @@ import PickerInput from "./PickerInput";
 
 const DatePicker = ({ value, setValue }) => {
   const [year, setYear] = React.useState(new Date().getFullYear());
-  const [month, setMonth] = React.useState(new Date().getMonth() + 1);
-  const [date, setDate] = React.useState(new Date().getDate());
+  const [month, setMonth] = React.useState(
+    (new Date().getMonth() + 1).toString().padStart(2, 0)
+  );
+  const [date, setDate] = React.useState(
+    new Date().getDate().toString().padStart(2, 0)
+  );
 
   const monthOptions = [
     "01",
@@ -37,8 +41,18 @@ const DatePicker = ({ value, setValue }) => {
     if (date > getMonthDays(year, month - 1)) {
       setDate(getMonthDays(year, month - 1));
     }
-    setValue({ month: parseInt(month) - 1, date: date, year: year });
+    setValue({ month, date, year });
   }, [date, month, year]);
+
+  React.useEffect(() => {
+    console.log(value);
+
+    if (value) {
+      setDate(value.date);
+      setMonth(value.month);
+      setYear(value.year);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>

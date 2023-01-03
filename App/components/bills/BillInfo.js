@@ -8,17 +8,14 @@ import {
 import React from "react";
 import Bubble from "../standard/Bubble";
 import { getStoredBills, setStoredBills } from "../../models/Bills";
+import CustomModal from "../standard/CustomModal";
+import BillForm from "./BillForm";
 
-const BillInfo = ({
-  index,
-  billName,
-  billType,
-  billFreq,
-  billDue,
-  billAmt,
-  setBills,
-}) => {
+const BillInfo = (props) => {
   const [collapsed, setCollapsed] = React.useState(true);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const { index, setBills, bill } = props;
+  const { billName, billType, billFreq, billDue, billAmt } = bill;
 
   const BillHeader = () => (
     <Pressable style={styles.header} onPress={() => setCollapsed(!collapsed)}>
@@ -28,9 +25,16 @@ const BillInfo = ({
   );
 
   const EditBillBtn = () => (
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>Edit</Text>
-    </TouchableOpacity>
+    <CustomModal
+      toggleBtnTitle="Edit"
+      toggleBtnStyle={styles.button}
+      toggleBtnTextStyle={styles.buttonText}
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+      animationType={"slide"}
+    >
+      <BillForm setModalVisible={setModalVisible} {...props} />
+    </CustomModal>
   );
 
   const DeleteBillBtn = () => (
@@ -63,7 +67,7 @@ const BillInfo = ({
           <View style={styles.col}>
             <Text style={styles.label}>Bill Due Date:</Text>
             <Text>
-              {billDue.month + 1}/{billDue.date}/{billDue.year}
+              {billDue.month}/{billDue.date}/{billDue.year}
             </Text>
           </View>
           <View style={styles.col}>
@@ -103,7 +107,6 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     padding: 16,
     borderRadius: 5,
-    margin: "5%",
   },
   buttonText: {
     color: "white",

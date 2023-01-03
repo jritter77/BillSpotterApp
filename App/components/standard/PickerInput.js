@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderColor: "lightblue",
     borderWidth: 2,
+    padding: 8,
   },
   btnTextStyle: {
     color: "black",
