@@ -6,7 +6,6 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import Bubble from "../standard/Bubble";
 import { getStoredBills, setStoredBills } from "../../models/Bills";
 import CustomModal from "../standard/CustomModal";
 import BillForm from "./BillForm";

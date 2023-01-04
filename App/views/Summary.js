@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import CustomScrollView from "../components/standard/CustomScrollView";
+import BarGraph from "../components/summary/BarGraph";
+import Bubble from "../components/standard/Bubble";
 
-const Summary = () => {
+const Summary = ({ bills }) => {
   return (
     <CustomScrollView>
-      <Text>Summary</Text>
+      <Bubble title={"Month Summary"}>
+        <BarGraph bills={bills} />
+      </Bubble>
     </CustomScrollView>
   );
 };

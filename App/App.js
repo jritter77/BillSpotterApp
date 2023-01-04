@@ -60,7 +60,10 @@ export default function App() {
           )}
           options={{ title: "My Payments" }}
         />
-        <Tab.Screen name="Summary" component={Summary} />
+        <Tab.Screen
+          name="Summary"
+          children={(props) => <Summary bills={bills} {...props} />}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
