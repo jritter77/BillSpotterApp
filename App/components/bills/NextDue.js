@@ -2,9 +2,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Bubble from "../standard/Bubble";
 import DueBill from "./DueBill";
+import { getBillTotals, sortByDate } from "../../models/Bills";
 
 const NextDue = ({ bills, setBills }) => {
-  const limit = bills.length > 3 ? 3 : bills.length;
+  const [limit, setLimit] = React.useState(3);
 
   const populateDueBills = () => {
     const dueBills = [];
@@ -27,7 +28,7 @@ const NextDue = ({ bills, setBills }) => {
   return (
     <Bubble title={"Next Due Bills"}>
       {populateDueBills()}
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity style={styles.btn} onPress={() => setLimit(limit + 3)}>
         <Text style={styles.btnText}>Show More</Text>
       </TouchableOpacity>
     </Bubble>

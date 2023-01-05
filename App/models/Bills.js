@@ -24,6 +24,7 @@ export async function getStoredBills() {
 
 export async function setStoredBills(bills) {
   try {
+    bills.sort(sortByDate);
     const data = JSON.stringify(bills);
     const result = await AsyncStorage.setItem("bills", data);
     return result;
@@ -52,4 +53,10 @@ export async function getBillTotals() {
   }
 
   return totals;
+}
+
+export function sortByDate(a, b) {
+  const fullDateA = a.billDue.year + a.billDue.month + a.billDue.date;
+  const fullDateB = b.billDue.year + b.billDue.month + b.billDue.date;
+  return fullDateA > fullDateB;
 }

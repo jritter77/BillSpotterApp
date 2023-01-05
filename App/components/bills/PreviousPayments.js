@@ -5,7 +5,8 @@ import DueBill from "./DueBill";
 import Payment from "./Payment";
 
 const PreviousPayments = ({ bills, setBills }) => {
-  const limit = bills.length > 3 ? 3 : bills.length;
+  const [limit, setLimit] = React.useState(bills.length > 3 ? 3 : bills.length);
+  let showMoreVisible = false;
 
   const populateDueBills = () => {
     const dueBills = [];
@@ -23,10 +24,13 @@ const PreviousPayments = ({ bills, setBills }) => {
         );
 
         if (dueBills.length >= limit) {
+          showMoreVisible = true;
           break;
         }
       }
     }
+
+    showMoreVisible = false;
 
     return dueBills;
   };
@@ -34,7 +38,8 @@ const PreviousPayments = ({ bills, setBills }) => {
   return (
     <Bubble title={"Next Due Bills"}>
       {populateDueBills()}
-      <TouchableOpacity style={styles.btn}>
+
+      <TouchableOpacity style={styles.btn} onPress={() => setLimit(limit + 3)}>
         <Text style={styles.btnText}>Show More</Text>
       </TouchableOpacity>
     </Bubble>

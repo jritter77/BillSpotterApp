@@ -170,13 +170,13 @@ const Legend = () => {
   return (
     <View style={styles.legend}>
       <Text>Due:</Text>
-      <View style={{ ...styles.due, width: 16, height: 16 }}></View>
+      <View style={{ ...styles.due, ...styles.legendIcon }}></View>
       <Text>Paid:</Text>
-      <View style={{ ...styles.paid, width: 16, height: 16 }}></View>
+      <View style={{ ...styles.paid, ...styles.legendIcon }}></View>
       <Text>Past-Due:</Text>
-      <View style={{ ...styles.pastDue, width: 16, height: 16 }}></View>
+      <View style={{ ...styles.pastDue, ...styles.legendIcon }}></View>
       <Text>Today:</Text>
-      <View style={{ ...styles.today, width: 16, height: 16 }}></View>
+      <View style={{ ...styles.today, ...styles.legendIcon }}></View>
     </View>
   );
 };
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   date: {
     flex: 1,
     textAlign: "center",
+    borderRadius: 5,
   },
   header: {
     backgroundColor: "black",
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   pastDue: {
-    backgroundColor: "red",
+    backgroundColor: "darkred",
     color: "white",
   },
   today: {
@@ -239,5 +240,10 @@ const styles = StyleSheet.create({
   legend: {
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  legendIcon: {
+    width: 16,
+    height: 16,
+    borderRadius: 5,
   },
 });

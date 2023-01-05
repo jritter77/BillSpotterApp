@@ -45,8 +45,6 @@ const DatePicker = ({ value, setValue }) => {
   }, [date, month, year]);
 
   React.useEffect(() => {
-    console.log(value);
-
     if (value) {
       setDate(value.date);
       setMonth(value.month);
