@@ -50,10 +50,12 @@ const BarGroup = ({ label, due, paid, max }) => {
           <Bar style={{ ...styles.due, width: `${(100 * due) / max}%` }} />
           <BarTotal amt={due} />
         </View>
-        <View style={styles.bar}>
-          <Bar style={{ ...styles.paid, width: `${(100 * paid) / max}%` }} />
-          <BarTotal amt={paid} />
-        </View>
+        {paid > 0 && (
+          <View style={styles.bar}>
+            <Bar style={{ ...styles.paid, width: `${(100 * paid) / max}%` }} />
+            <BarTotal amt={paid} style={{ color: "green" }} />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -63,7 +65,9 @@ const Bar = ({ style }) => <View style={style}></View>;
 
 const BarLabel = ({ label }) => <Text style={styles.label}>{label}</Text>;
 
-const BarTotal = ({ amt }) => <Text style={styles.total}>{amt}</Text>;
+const BarTotal = ({ amt, style }) => (
+  <Text style={{ ...styles.total, ...style }}>${amt}</Text>
+);
 
 export default BarGraph;
 
@@ -93,6 +97,7 @@ const styles = StyleSheet.create({
     width: "20%",
     textAlign: "right",
     marginRight: "5%",
+    fontWeight: "bold",
   },
   graph: {
     padding: "5%",

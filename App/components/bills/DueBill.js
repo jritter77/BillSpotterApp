@@ -29,6 +29,7 @@ const DueBill = ({ bill, setBills, index }) => {
           <Ionicons name="checkmark-circle-outline" size={40} color="green" />
         }
         toggleBtnStyle={styles.confirmPaid}
+        animationType="slide"
       >
         <PaymentForm
           setModalVisible={setModalVisible}
