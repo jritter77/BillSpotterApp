@@ -7,7 +7,7 @@ import NextDue from "../components/bills/NextDue";
 const Dashboard = ({ bills, setBills }) => {
   return (
     <CustomScrollView>
-      <Calendar />
+      <Calendar bills={bills} />
       <NextDue bills={bills} setBills={setBills} />
     </CustomScrollView>
   );

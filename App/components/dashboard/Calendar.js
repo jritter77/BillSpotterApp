@@ -6,7 +6,7 @@ import Bubble from "../standard/Bubble";
  * It creates a calendar
  * @returns A function that returns a component.
  */
-const Calendar = () => {
+const Calendar = ({ bills }) => {
   const monthNames = [
     "January",
     "February",
@@ -24,10 +24,18 @@ const Calendar = () => {
   const [month, setMonth] = React.useState(new Date().getMonth());
   const [year, setYear] = React.useState(new Date().getFullYear());
 
+  const monthBills = bills?.filter(
+    (b) => b.billDue.year === year && parseInt(b.billDue.month) - 1 === month
+  );
+
   function populateDates() {
     const date = new Date();
     const rows = [];
-
+    const today = {
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      date: date.getDate(),
+    };
     date.setFullYear(year);
     date.setMonth(month);
     date.setDate(1);
@@ -45,13 +53,45 @@ const Calendar = () => {
           d = "";
         }
 
-        dates.push(<Col key={7 * r + c} date={d} />);
+        dates.push(
+          <Col key={7 * r + c} date={d} highlight={getHighlight(d, today)} />
+        );
       }
 
       rows.push(<Row key={r} dates={dates} />);
     }
 
     return rows;
+  }
+
+  function getHighlight(day, today) {
+    if (!monthBills) {
+      return;
+    }
+
+    let highlight = {};
+
+    for (let b of monthBills) {
+      if (parseInt(b.billDue.date) === day) {
+        if (b.billPaid) {
+          highlight = styles.paid;
+        } else if (
+          b.billDue.year < today.year ||
+          parseInt(b.billDue.month) - 1 < today.month ||
+          parseInt(b.billDue.date) < today.date
+        ) {
+          highlight = styles.pastDue;
+        } else {
+          highlight = styles.due;
+        }
+      }
+    }
+
+    if (year === today.year && month === today.month && day === today.date) {
+      highlight = { ...highlight, ...styles.today };
+    }
+
+    return highlight;
   }
 
   return (
@@ -65,6 +105,7 @@ const Calendar = () => {
       }
     >
       {populateDates()}
+      <Legend />
     </Bubble>
   );
 };
@@ -81,8 +122,8 @@ const Row = ({ dates }) => {
  * It takes a date as a prop and returns a Text component with the date as the text
  * @returns A function that returns a Text component.
  */
-const Col = ({ date }) => {
-  return <Text style={styles.date}>{date}</Text>;
+const Col = ({ date, highlight }) => {
+  return <Text style={{ ...styles.date, ...highlight }}>{date}</Text>;
 };
 
 /**
@@ -125,6 +166,21 @@ const NextDateBtn = ({ month, setMonth, year, setYear }) => {
   );
 };
 
+const Legend = () => {
+  return (
+    <View style={styles.legend}>
+      <Text>Due:</Text>
+      <View style={{ ...styles.due, width: 16, height: 16 }}></View>
+      <Text>Paid:</Text>
+      <View style={{ ...styles.paid, width: 16, height: 16 }}></View>
+      <Text>Past-Due:</Text>
+      <View style={{ ...styles.pastDue, width: 16, height: 16 }}></View>
+      <Text>Today:</Text>
+      <View style={{ ...styles.today, width: 16, height: 16 }}></View>
+    </View>
+  );
+};
+
 export default Calendar;
 
 const styles = StyleSheet.create({
@@ -163,5 +219,25 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     padding: 8,
+  },
+  due: {
+    backgroundColor: "black",
+    color: "white",
+  },
+  paid: {
+    backgroundColor: "green",
+    color: "white",
+  },
+  pastDue: {
+    backgroundColor: "red",
+    color: "white",
+  },
+  today: {
+    borderWidth: 2,
+    borderColor: "lightblue",
+  },
+  legend: {
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
