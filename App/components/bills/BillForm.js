@@ -56,7 +56,8 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <CustomForm onSubmit={onSubmit}>
+      <CustomForm onSubmit={onSubmit} title={"Save Changes"}>
+        <Text style={styles.heading}>Bill Details</Text>
         <Text style={styles.label}>Bill Name</Text>
         <FormTextInput
           placeholder="Name of bill"
@@ -98,5 +99,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginTop: "5%",
+  },
+  heading: {
+    fontSize: 24,
+    textDecorationLine: "underline",
   },
 });

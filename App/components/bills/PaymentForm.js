@@ -35,17 +35,18 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <CustomForm onSubmit={onSubmit}>
+      <CustomForm onSubmit={onSubmit} title={"Confirm Paid"}>
+        <Text style={styles.heading}>Payment Details</Text>
         <Text style={styles.label}>Bill Name</Text>
-        <Text>{bill.billName}</Text>
+        <Text style={styles.text}>{bill.billName}</Text>
         <Text style={styles.label}>Bill Type</Text>
-        <Text>{bill.billType}</Text>
+        <Text style={styles.text}>{bill.billType}</Text>
         <Text style={styles.label}>Date Due</Text>
-        <Text>
+        <Text style={styles.text}>
           {bill.billDue.month}/{bill.billDue.date}/{bill.billDue.year}
         </Text>
         <Text style={styles.label}>Amount Due</Text>
-        <Text>{bill.billAmt}</Text>
+        <Text style={styles.text}>${bill.billAmt}.00</Text>
         <Text style={styles.label}>Date Paid</Text>
         <DatePicker value={billPaid} setValue={setBillPaid} />
         <Text style={styles.label}>Amount Paid</Text>
@@ -66,8 +67,15 @@ const styles = StyleSheet.create({
     padding: "5%",
   },
   label: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
     marginTop: "5%",
+  },
+  heading: {
+    fontSize: 24,
+    textDecorationLine: "underline",
+  },
+  text: {
+    fontSize: 16,
   },
 });

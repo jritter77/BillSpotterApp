@@ -6,12 +6,12 @@ import React from "react";
  * a TouchableOpacity with the onSubmit function.
  * @returns A function that takes in a component and returns a component.
  */
-const CustomForm = ({ children, onSubmit }) => {
+const CustomForm = ({ children, onSubmit, title }) => {
   return (
     <View>
       {children}
       <TouchableOpacity style={styles.submit} onPress={onSubmit}>
-        <Text style={styles.submitText}>Submit</Text>
+        <Text style={styles.submitText}>{title ? title : "Submit"}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
     padding: 16,
     borderRadius: 5,
-    width: "50%",
     marginTop: "10%",
   },
   submitText: {
