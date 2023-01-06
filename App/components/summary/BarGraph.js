@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { getBillTotals } from "../../models/Bills";
+import { getMonthTotals } from "../../models/Bills";
 
 const BarGraph = ({ bills }) => {
   const [totals, setTotals] = React.useState({});
+  const date = new Date();
 
   const populateBars = () => {
     const bars = [];
@@ -32,7 +33,7 @@ const BarGraph = ({ bills }) => {
 
   React.useEffect(() => {
     const getTotals = async () => {
-      setTotals(await getBillTotals());
+      setTotals(await getMonthTotals(date.getFullYear(), date.getMonth()));
     };
 
     getTotals();

@@ -6,6 +6,7 @@ import DatePicker from "../standard/DatePicker";
 import FormTextInput from "../standard/FormTextInput";
 import {
   createNewBill,
+  generateNewBill,
   getStoredBills,
   setStoredBills,
 } from "../../models/Bills";
@@ -27,6 +28,18 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
       billPaid,
       billAmtPaid,
     };
+
+    const newBill = generateNewBill(bills[index]);
+    const exists = bills.filter((e) => {
+      return (
+        e.billName === newBill.billName &&
+        e.billDue.month === newBill.billDue.month
+      );
+    });
+
+    if (!exists.length) {
+      bills.push(newBill);
+    }
 
     await setStoredBills(bills);
     setBills(bills);

@@ -3,14 +3,16 @@ import React from "react";
 import CustomScrollView from "../components/standard/CustomScrollView";
 import BarGraph from "../components/summary/BarGraph";
 import Bubble from "../components/standard/Bubble";
-import { getBillTotals } from "../models/Bills";
+import { getMonthTotals } from "../models/Bills";
 
 const Summary = ({ bills }) => {
   const [totalDue, setTotalDue] = React.useState(0);
   const [totalPaid, setTotalPaid] = React.useState(0);
 
+  const date = new Date();
+
   const getTotals = async () => {
-    const totals = await getBillTotals();
+    const totals = await getMonthTotals(date.getFullYear(), date.getMonth());
 
     let td = 0;
     let tp = 0;

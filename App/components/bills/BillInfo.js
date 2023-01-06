@@ -9,6 +9,7 @@ import React from "react";
 import { getStoredBills, setStoredBills } from "../../models/Bills";
 import CustomModal from "../standard/CustomModal";
 import BillForm from "./BillForm";
+import CustomAlert from "../standard/CustomAlert";
 
 const BillInfo = (props) => {
   const [collapsed, setCollapsed] = React.useState(true);
@@ -37,7 +38,16 @@ const BillInfo = (props) => {
   );
 
   const DeleteBillBtn = () => (
-    <TouchableOpacity style={styles.button} onPress={handleDelete}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() =>
+        CustomAlert(
+          "Delete Bill",
+          `Are you sure you would like to delete this bill?`,
+          handleDelete
+        )
+      }
+    >
       <Text style={styles.buttonText}>Delete</Text>
     </TouchableOpacity>
   );

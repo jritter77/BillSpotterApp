@@ -8,6 +8,7 @@ import {
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { setStoredBills } from "../../models/Bills";
+import CustomAlert from "../standard/CustomAlert";
 
 const Payment = ({ bill, bills, setBills, index }) => {
   const handleDelete = async () => {
@@ -26,7 +27,16 @@ const Payment = ({ bill, bills, setBills, index }) => {
         <Text style={styles.nameField}>{bill.billName}</Text>
       </View>
       <Text style={styles.amtField}>${bill.billAmtPaid}.00</Text>
-      <TouchableOpacity style={styles.confirmPaid} onPress={handleDelete}>
+      <TouchableOpacity
+        style={styles.confirmPaid}
+        onPress={() =>
+          CustomAlert(
+            "Delete Payment",
+            `Are you sure you would like to delete this payment?`,
+            handleDelete
+          )
+        }
+      >
         <Ionicons name="close-circle-outline" size={40} color="darkred" />
       </TouchableOpacity>
     </View>
