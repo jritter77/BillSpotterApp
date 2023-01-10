@@ -28,9 +28,21 @@ const NextDue = ({ bills, setBills }) => {
   return (
     <Bubble title={"Next Due Bills"}>
       {populateDueBills()}
-      <TouchableOpacity style={styles.btn} onPress={() => setLimit(limit + 3)}>
-        <Text style={styles.btnText}>Show More</Text>
-      </TouchableOpacity>
+      {bills.length > 0 && (
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => setLimit(limit + 3)}
+        >
+          <Text style={styles.btnText}>Show More</Text>
+        </TouchableOpacity>
+      )}
+      {!bills.length && (
+        <Text style={styles.noBills}>
+          {
+            "You do not currently have any upcoming payments.\n\nYou can create a new bill from the My Bills page."
+          }
+        </Text>
+      )}
     </Bubble>
   );
 };
@@ -49,5 +61,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: "5%",
     marginLeft: "25%",
+  },
+  noBills: {
+    textAlign: "center",
+    padding: "5%",
+    fontSize: 16,
   },
 });
