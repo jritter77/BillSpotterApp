@@ -15,15 +15,20 @@ const DueBill = ({ bill, setBills, index }) => {
 
   const highlightPastDue = () => {
     const date = new Date();
-    if (
-      date.getFullYear() <= bill.billDue.year &&
-      date.getMonth() <= bill.billDue.month - 1 &&
-      date.getDate() <= bill.billDue.date
-    ) {
-      return "grey";
-    } else {
-      return "darkred";
+
+    if (date.getFullYear() <= bill.billDue.year) {
+      if (date.getMonth() + 1 < parseInt(bill.billDue.month)) {
+        return "grey";
+      } else if (date.getMonth() + 1 === parseInt(bill.billDue.month)) {
+        if (date.getDate() <= parseInt(bill.billDue.date)) {
+          return "grey";
+        }
+
+        return "darkred";
+      }
     }
+
+    return "darkred";
   };
 
   return (
