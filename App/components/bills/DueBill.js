@@ -12,10 +12,24 @@ import PaymentForm from "./PaymentForm";
 
 const DueBill = ({ bill, setBills, index }) => {
   const [modalVisible, setModalVisible] = React.useState(false);
+
+  const highlightPastDue = () => {
+    const date = new Date();
+    if (
+      date.getFullYear() <= bill.billDue.year &&
+      date.getMonth() <= bill.billDue.month - 1 &&
+      date.getDate() <= bill.billDue.date
+    ) {
+      return "grey";
+    } else {
+      return "darkred";
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.dateAndName}>
-        <Text style={styles.dateField}>
+        <Text style={{ ...styles.dateField, color: highlightPastDue() }}>
           {bill.billDue.month}/{bill.billDue.date}/{bill.billDue.year}
         </Text>
         <Text style={styles.nameField}>{bill.billName}</Text>

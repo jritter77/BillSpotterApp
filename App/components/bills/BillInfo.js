@@ -82,7 +82,7 @@ const BillInfo = (props) => {
           </View>
           <View style={styles.col}>
             <Text style={styles.label}>Bill Amount Due:</Text>
-            <Text>{billAmt}</Text>
+            <Text>${billAmt}.00</Text>
           </View>
         </View>
         <View style={styles.row}>

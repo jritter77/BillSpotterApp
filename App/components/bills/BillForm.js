@@ -74,7 +74,7 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
         <PickerInput
           value={billFreq}
           setValue={setBillFreq}
-          options={["Weekly", "Monthly", "Yearly"]}
+          options={["One-Time", "Weekly", "Monthly", "Yearly"]}
         />
         <Text style={styles.label}>Bill Due Date</Text>
         <DatePicker value={billDue} setValue={setBillDue} />
