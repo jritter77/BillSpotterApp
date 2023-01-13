@@ -35,12 +35,20 @@ const Summary = ({ bills }) => {
         <View style={styles.row}>
           <View style={styles.col}>
             <Text style={styles.header}>Due:</Text>
-            <Text style={styles.amt}>${totalDue}.00</Text>
+            <Text style={styles.amt}>
+              $
+              {totalDue.toString().indexOf(".") > 0
+                ? totalDue
+                : totalDue.toString() + ".00"}
+            </Text>
           </View>
           <View style={styles.col}>
             <Text style={{ ...styles.header, color: "green" }}>Paid:</Text>
             <Text style={{ ...styles.amt, color: "green" }}>
-              ${totalPaid}.00
+              $
+              {totalPaid.toString().indexOf(".") > 0
+                ? totalPaid
+                : totalPaid.toString() + ".00"}
             </Text>
           </View>
         </View>

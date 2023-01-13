@@ -67,7 +67,7 @@ const Bar = ({ style }) => <View style={style}></View>;
 const BarLabel = ({ label }) => <Text style={styles.label}>{label}</Text>;
 
 const BarTotal = ({ amt, style }) => (
-  <Text style={{ ...styles.total, ...style }}>${amt}</Text>
+  <Text style={{ ...styles.total, ...style }}>${parseInt(amt)}</Text>
 );
 
 export default BarGraph;
