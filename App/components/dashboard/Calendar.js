@@ -169,14 +169,14 @@ const NextDateBtn = ({ month, setMonth, year, setYear }) => {
 const Legend = () => {
   return (
     <View style={styles.legend}>
-      <Text>Due:</Text>
       <View style={{ ...styles.due, ...styles.legendIcon }}></View>
-      <Text>Paid:</Text>
+      <Text>Due</Text>
       <View style={{ ...styles.paid, ...styles.legendIcon }}></View>
-      <Text>Past-Due:</Text>
+      <Text>Paid</Text>
       <View style={{ ...styles.pastDue, ...styles.legendIcon }}></View>
-      <Text>Today:</Text>
+      <Text>Past-Due</Text>
       <View style={{ ...styles.today, ...styles.legendIcon }}></View>
+      <Text>Today</Text>
     </View>
   );
 };
@@ -239,11 +239,12 @@ const styles = StyleSheet.create({
   },
   legend: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
   legendIcon: {
     width: 16,
     height: 16,
     borderRadius: 5,
+    marginLeft: "5%",
   },
 });

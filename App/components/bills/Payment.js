@@ -26,7 +26,7 @@ const Payment = ({ bill, bills, setBills, index }) => {
         </Text>
         <Text style={styles.nameField}>{bill.billName}</Text>
       </View>
-      <Text style={styles.amtField}>${bill.billAmtPaid}.00</Text>
+      <Text style={styles.amtField}>${bill.billAmtPaid}</Text>
       <TouchableOpacity
         style={styles.confirmPaid}
         onPress={() =>

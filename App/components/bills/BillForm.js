@@ -15,7 +15,7 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
   const [billType, setBillType] = React.useState("Home");
   const [billFreq, setBillFreq] = React.useState("Monthly");
   const [billDue, setBillDue] = React.useState(bill?.billDue);
-  const [billAmt, setBillAmt] = React.useState("");
+  const [billAmt, setBillAmt] = React.useState(bill?.billAmt);
 
   const onSubmit = async () => {
     const bills = await getStoredBills();
@@ -82,7 +82,17 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
         <FormTextInput
           placeholder="Amount"
           value={billAmt}
-          onChangeText={setBillAmt}
+          onChangeText={(e) =>
+            setBillAmt((oldstate) => {
+              const num = e.replace(/^0+/, "");
+              const sliced =
+                num.slice(0, num.indexOf(".")) +
+                num.slice(num.indexOf(".") + 1);
+              const padded = sliced.padStart(3, 0);
+              return padded.slice(0, -2) + "." + padded.slice(-2);
+            })
+          }
+          keyboardType="numeric"
         />
       </CustomForm>
     </ScrollView>

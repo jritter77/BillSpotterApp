@@ -39,7 +39,7 @@ const DueBill = ({ bill, setBills, index }) => {
         </Text>
         <Text style={styles.nameField}>{bill.billName}</Text>
       </View>
-      <Text style={styles.amtField}>${bill.billAmt}.00</Text>
+      <Text style={styles.amtField}>${bill.billAmt}</Text>
 
       <CustomModal
         modalVisible={modalVisible}

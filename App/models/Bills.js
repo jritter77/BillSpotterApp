@@ -70,19 +70,19 @@ export async function getMonthTotals(year, month) {
   let bills = await getStoredBills();
 
   bills = bills?.filter(
-    (b) => b.billDue.year === year && parseInt(b.billDue.month) - 1 === month
+    (b) => b.billDue.year === year && parseFloat(b.billDue.month) - 1 === month
   );
 
   for (let bill of bills) {
     if (bill.billType in totals) {
-      totals[bill.billType].due += parseInt(bill.billAmt);
+      totals[bill.billType].due += parseFloat(bill.billAmt);
       totals[bill.billType].paid += bill.billAmtPaid
-        ? parseInt(bill.billAmtPaid)
+        ? parseFloat(bill.billAmtPaid)
         : 0;
     } else {
       totals[bill.billType] = {
-        due: parseInt(bill.billAmt),
-        paid: bill.billAmtPaid ? parseInt(bill.billAmtPaid) : 0,
+        due: parseFloat(bill.billAmt),
+        paid: bill.billAmtPaid ? parseFloat(bill.billAmtPaid) : 0,
       };
     }
   }

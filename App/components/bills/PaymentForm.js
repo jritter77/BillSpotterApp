@@ -59,14 +59,24 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
           {bill.billDue.month}/{bill.billDue.date}/{bill.billDue.year}
         </Text>
         <Text style={styles.label}>Amount Due</Text>
-        <Text style={styles.text}>${bill.billAmt}.00</Text>
+        <Text style={styles.text}>${bill.billAmt}</Text>
         <Text style={styles.label}>Date Paid</Text>
         <DatePicker value={billPaid} setValue={setBillPaid} />
         <Text style={styles.label}>Amount Paid</Text>
         <FormTextInput
           placeholder="Amount"
           value={billAmtPaid}
-          onChangeText={setBillAmtPaid}
+          onChangeText={(e) =>
+            setBillAmtPaid((oldstate) => {
+              const num = e.replace(/^0+/, "");
+              const sliced =
+                num.slice(0, num.indexOf(".")) +
+                num.slice(num.indexOf(".") + 1);
+              const padded = sliced.padStart(3, 0);
+              return padded.slice(0, -2) + "." + padded.slice(-2);
+            })
+          }
+          keyboardType="numeric"
         />
       </CustomForm>
     </ScrollView>
