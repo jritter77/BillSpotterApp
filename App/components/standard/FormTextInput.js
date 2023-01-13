@@ -14,5 +14,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 8,
     fontSize: 16,
+    flex: 1,
   },
 });

@@ -63,21 +63,24 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
         <Text style={styles.label}>Date Paid</Text>
         <DatePicker value={billPaid} setValue={setBillPaid} />
         <Text style={styles.label}>Amount Paid</Text>
-        <FormTextInput
-          placeholder="Amount"
-          value={billAmtPaid}
-          onChangeText={(e) =>
-            setBillAmtPaid((oldstate) => {
-              const num = e.replace(/^0+/, "");
-              const sliced =
-                num.slice(0, num.indexOf(".")) +
-                num.slice(num.indexOf(".") + 1);
-              const padded = sliced.padStart(3, 0);
-              return padded.slice(0, -2) + "." + padded.slice(-2);
-            })
-          }
-          keyboardType="numeric"
-        />
+        <View style={styles.row}>
+          <Text style={styles.dollar}>$</Text>
+          <FormTextInput
+            placeholder="Amount"
+            value={billAmtPaid}
+            onChangeText={(e) =>
+              setBillAmtPaid((oldstate) => {
+                const num = e.replace(/^0+/, "");
+                const sliced =
+                  num.slice(0, num.indexOf(".")) +
+                  num.slice(num.indexOf(".") + 1);
+                const padded = sliced.padStart(3, 0);
+                return padded.slice(0, -2) + "." + padded.slice(-2);
+              })
+            }
+            keyboardType="numeric"
+          />
+        </View>
       </CustomForm>
     </ScrollView>
   );
@@ -100,5 +103,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dollar: {
+    fontSize: 24,
+    padding: 8,
   },
 });

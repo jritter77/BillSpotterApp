@@ -15,7 +15,7 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
   const [billType, setBillType] = React.useState("Home");
   const [billFreq, setBillFreq] = React.useState("Monthly");
   const [billDue, setBillDue] = React.useState(bill?.billDue);
-  const [billAmt, setBillAmt] = React.useState(bill?.billAmt);
+  const [billAmt, setBillAmt] = React.useState("0.00");
 
   const onSubmit = async () => {
     const bills = await getStoredBills();
@@ -79,21 +79,24 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
         <Text style={styles.label}>Bill Due Date</Text>
         <DatePicker value={billDue} setValue={setBillDue} />
         <Text style={styles.label}>Bill Amount Due</Text>
-        <FormTextInput
-          placeholder="Amount"
-          value={billAmt}
-          onChangeText={(e) =>
-            setBillAmt((oldstate) => {
-              const num = e.replace(/^0+/, "");
-              const sliced =
-                num.slice(0, num.indexOf(".")) +
-                num.slice(num.indexOf(".") + 1);
-              const padded = sliced.padStart(3, 0);
-              return padded.slice(0, -2) + "." + padded.slice(-2);
-            })
-          }
-          keyboardType="numeric"
-        />
+        <View style={styles.row}>
+          <Text style={styles.dollar}>$</Text>
+          <FormTextInput
+            placeholder="Amount"
+            value={billAmt}
+            onChangeText={(e) =>
+              setBillAmt((oldstate) => {
+                const num = e.replace(/^0+/, "");
+                const sliced =
+                  num.slice(0, num.indexOf(".")) +
+                  num.slice(num.indexOf(".") + 1);
+                const padded = sliced.padStart(3, 0);
+                return padded.slice(0, -2) + "." + padded.slice(-2);
+              })
+            }
+            keyboardType="numeric"
+          />
+        </View>
       </CustomForm>
     </ScrollView>
   );
@@ -113,5 +116,13 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     textDecorationLine: "underline",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dollar: {
+    fontSize: 24,
+    padding: 8,
   },
 });
