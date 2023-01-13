@@ -26,7 +26,9 @@ const Summary = ({ bills }) => {
     setTotalPaid(tp);
   };
 
-  getTotals();
+  React.useEffect(() => {
+    getTotals();
+  }, [bills]);
 
   return (
     <CustomScrollView>

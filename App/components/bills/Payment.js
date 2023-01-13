@@ -14,7 +14,7 @@ const Payment = ({ bill, bills, setBills, index }) => {
   const handleDelete = async () => {
     bills[index].billPaid = null;
     bills[index].billAmtPaid = null;
-    setBills(() => [...bills]);
+    setBills([...bills]);
     await setStoredBills(bills);
   };
 
