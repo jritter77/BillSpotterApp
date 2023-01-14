@@ -12,6 +12,8 @@ import NewBillBtn from "./components/bills/NewBillBtn";
 import React from "react";
 import { getStoredBills, setStoredBills } from "./models/Bills";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SettingsButton from "./components/dashboard/SettingsButton";
+import Settings from "./views/Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +44,9 @@ export default function App() {
           children={(props) => (
             <Dashboard bills={bills} setBills={setBills} {...props} />
           )}
+          options={{
+            headerRight: () => <SettingsButton />,
+          }}
         />
         <Tab.Screen
           name="MyBills"
