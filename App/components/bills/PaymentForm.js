@@ -19,8 +19,13 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
     year: d.getFullYear(),
   });
   const [billAmtPaid, setBillAmtPaid] = React.useState(bill.billAmt);
+  const [feedback, setFeedback] = React.useState("");
 
   const onSubmit = async () => {
+    if (!verifyInput()) {
+      return;
+    }
+
     const bills = await getStoredBills();
 
     bills[index] = {
@@ -44,6 +49,16 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
     await setStoredBills(bills);
     setBills(bills);
     setModalVisible(false);
+  };
+
+  const verifyInput = () => {
+    if (!parseInt(billAmtPaid) > 0) {
+      setFeedback("Please enter a valid amount paid.");
+      return false;
+    } else {
+      setFeedback("");
+      return true;
+    }
   };
 
   return (
@@ -81,6 +96,7 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
             keyboardType="numeric"
           />
         </View>
+        <Text style={styles.feedback}>{feedback}</Text>
       </CustomForm>
     </ScrollView>
   );
@@ -111,5 +127,9 @@ const styles = StyleSheet.create({
   dollar: {
     fontSize: 24,
     padding: 8,
+  },
+  feedback: {
+    fontSize: 16,
+    color: "red",
   },
 });

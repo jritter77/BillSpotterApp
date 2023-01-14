@@ -16,8 +16,13 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
   const [billFreq, setBillFreq] = React.useState("Monthly");
   const [billDue, setBillDue] = React.useState(bill?.billDue);
   const [billAmt, setBillAmt] = React.useState("0.00");
+  const [feedback, setFeedback] = React.useState("");
 
   const onSubmit = async () => {
+    if (!verifyInput()) {
+      return;
+    }
+
     const bills = await getStoredBills();
     if (!bill) {
       const newBill = createNewBill(
@@ -42,6 +47,19 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
     await setStoredBills(bills);
     setBills(bills);
     setModalVisible(false);
+  };
+
+  const verifyInput = () => {
+    if (!billName) {
+      setFeedback("Please enter a name for the bill.");
+      return false;
+    } else if (!parseFloat(billAmt) > 0) {
+      setFeedback("Please enter a valid amount due for the bill.");
+      return false;
+    } else {
+      setFeedback("");
+      return true;
+    }
   };
 
   React.useEffect(() => {
@@ -97,6 +115,7 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
             keyboardType="numeric"
           />
         </View>
+        <Text style={styles.feedback}>{feedback}</Text>
       </CustomForm>
     </ScrollView>
   );
@@ -124,5 +143,9 @@ const styles = StyleSheet.create({
   dollar: {
     fontSize: 24,
     padding: 8,
+  },
+  feedback: {
+    fontSize: 16,
+    color: "red",
   },
 });
