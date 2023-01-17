@@ -1,26 +1,36 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import Bubble from "../standard/Bubble";
+import CustomModal from "../standard/CustomModal";
+import BillForm from "../bills/BillForm";
+import CustomScrollView from "../standard/CustomScrollView";
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 /**
  * It creates a calendar
  * @returns A function that returns a component.
  */
 const Calendar = ({ bills }) => {
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
   const [month, setMonth] = React.useState(new Date().getMonth());
   const [year, setYear] = React.useState(new Date().getFullYear());
 
@@ -54,7 +64,7 @@ const Calendar = ({ bills }) => {
         }
 
         dates.push(
-          <Col key={7 * r + c} date={d} highlight={getHighlight(d, today)} />
+          <Col key={7 * r + c} date={d} monthBills={monthBills} today={today} />
         );
       }
 
@@ -62,36 +72,6 @@ const Calendar = ({ bills }) => {
     }
 
     return rows;
-  }
-
-  function getHighlight(day, today) {
-    if (!monthBills) {
-      return;
-    }
-
-    let highlight = {};
-
-    for (let b of monthBills) {
-      if (parseInt(b.billDue.date) === day) {
-        if (b.billPaid) {
-          highlight = styles.paid;
-        } else if (
-          b.billDue.year < today.year ||
-          parseInt(b.billDue.month) - 1 < today.month ||
-          parseInt(b.billDue.date) < today.date
-        ) {
-          highlight = styles.pastDue;
-        } else {
-          highlight = styles.due;
-        }
-      }
-    }
-
-    if (year === today.year && month === today.month && day === today.date) {
-      highlight = { ...highlight, ...styles.today };
-    }
-
-    return highlight;
   }
 
   return (
@@ -122,8 +102,54 @@ const Row = ({ dates }) => {
  * It takes a date as a prop and returns a Text component with the date as the text
  * @returns A function that returns a Text component.
  */
-const Col = ({ date, highlight }) => {
-  return <Text style={{ ...styles.date, ...highlight }}>{date}</Text>;
+const Col = ({ date, monthBills, today }) => {
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const dateBills = monthBills?.filter(
+    (b) => parseInt(b.billDue.date) === parseInt(date)
+  );
+
+  const populateDateBills = () => {
+    const bills = [];
+
+    for (let bill of dateBills) {
+      bills.push(<ModalDate key={bill.billName} bill={bill} />);
+    }
+
+    return bills;
+  };
+
+  if (dateBills.length) {
+    return (
+      <CustomModal
+        toggleBtnTitle={date}
+        style={styles.date}
+        toggleBtnStyle={styles.date}
+        toggleBtnTextStyle={{
+          ...styles.dateText,
+          ...getHighlight(date, today, dateBills),
+        }}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        animationType={"fade"}
+        transparent={true}
+      >
+        <View style={styles.dateModalContainer}>{populateDateBills()}</View>
+      </CustomModal>
+    );
+  } else {
+    return (
+      <Text
+        style={{
+          ...styles.date,
+          ...styles.dateText,
+          ...getHighlight(date, today, dateBills),
+        }}
+      >
+        {date}
+      </Text>
+    );
+  }
 };
 
 /**
@@ -181,6 +207,45 @@ const Legend = () => {
   );
 };
 
+const ModalDate = ({ bill }) => {
+  return (
+    <View style={styles.modalDate}>
+      <Text>{bill.billName}</Text>
+      <Text>{bill.billAmt}</Text>
+    </View>
+  );
+};
+
+function getHighlight(day, today, dateBills) {
+  if (!dateBills) {
+    return;
+  }
+
+  let highlight = {};
+
+  for (let b of dateBills) {
+    if (parseInt(b.billDue.date) === day) {
+      if (b.billPaid) {
+        highlight = styles.paid;
+      } else if (
+        b.billDue.year < today.year ||
+        parseInt(b.billDue.month) - 1 < today.month ||
+        parseInt(b.billDue.date) < today.date
+      ) {
+        highlight = styles.pastDue;
+      } else {
+        highlight = styles.due;
+      }
+    }
+  }
+
+  if (day === today.date) {
+    highlight = { ...highlight, ...styles.today };
+  }
+
+  return highlight;
+}
+
 export default Calendar;
 
 const styles = StyleSheet.create({
@@ -191,7 +256,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    margin: "5%",
+    margin: 8,
   },
   title: {
     textAlign: "center",
@@ -200,8 +265,22 @@ const styles = StyleSheet.create({
   },
   date: {
     flex: 1,
+    backgroundColor: "white",
+  },
+  dateText: {
     textAlign: "center",
     borderRadius: 5,
+    color: "black",
+    fontSize: 16,
+  },
+  dateModalContainer: {
+    width: "100%",
+    minHeight: "100%",
+    backgroundColor: "rgba(0, 0, 0, .5)",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: "10%",
+    paddingBottom: "10%",
   },
   header: {
     backgroundColor: "black",
@@ -246,5 +325,11 @@ const styles = StyleSheet.create({
     height: 16,
     borderRadius: 5,
     marginLeft: "5%",
+  },
+  modalDate: {
+    backgroundColor: "white",
+    flexDirection: "row",
+    padding: "5%",
+    width: "70%",
   },
 });
