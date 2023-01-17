@@ -38,7 +38,8 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
     const exists = bills.filter((e) => {
       return (
         e.billName === newBill.billName &&
-        e.billDue.month === newBill.billDue.month
+        e.billDue.month === newBill.billDue.month &&
+        e.billDue.date === newBill.billDue.date
       );
     });
 

@@ -45,6 +45,7 @@ export function generateNewBill(prevBill) {
     date.setMonth(date.getMonth() + 1);
   } else if (prevBill.billFreq === "Weekly") {
     date.setDate(date.getDate() + 7);
+    console.log(date.getDate());
   } else if (prevBill.billFreq === "Yearly") {
     date.setFullYear(date.getFullYear() + 1);
   }
