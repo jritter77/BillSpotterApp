@@ -134,7 +134,12 @@ const Col = ({ date, monthBills, today }) => {
         animationType={"fade"}
         transparent={true}
       >
-        <View style={styles.dateModalContainer}>{populateDateBills()}</View>
+        <Pressable
+          style={styles.dateModalContainer}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
+          {populateDateBills()}
+        </Pressable>
       </CustomModal>
     );
   } else {
@@ -208,10 +213,41 @@ const Legend = () => {
 };
 
 const ModalDate = ({ bill }) => {
+  const date = new Date();
+
+  let status;
+
+  if (bill.billPaid) {
+    status = "Paid";
+  } else {
+    if (date.getFullYear() <= parseInt(bill.billDue.year)) {
+      if (
+        date.getFullYear() === parseInt(bill.billDue.year) &&
+        date.getMonth() + 1 <= parseInt(bill.billDue.month)
+      ) {
+        if (
+          date.getMonth() + 1 === parseInt(bill.billDue.month) &&
+          date.getDate() <= parseInt(bill.billDue.date)
+        ) {
+          status = "Due";
+        } else {
+          status = "Past Due";
+        }
+      } else {
+        console.log("here");
+
+        status = "Past Due";
+      }
+    } else {
+      status = "Past Due";
+    }
+  }
+
   return (
     <View style={styles.modalDate}>
       <Text>{bill.billName}</Text>
-      <Text>{bill.billAmt}</Text>
+      <Text style={styles.modalDateField}>${bill.billAmt}</Text>
+      <Text>{status}</Text>
     </View>
   );
 };
@@ -331,5 +367,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: "5%",
     width: "70%",
+    justifyContent: "space-between",
+  },
+  modalDateField: {
+    flex: 1,
+    textAlign: "right",
+    marginRight: "10%",
   },
 });
