@@ -1,4 +1,5 @@
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -46,7 +47,12 @@ const PickerInput = ({ value, setValue, options }) => {
       toggleBtnTextStyle={styles.btnTextStyle}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        {populateOptionButtons()}
+        <Pressable
+          style={styles.background}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
+          {populateOptionButtons()}
+        </Pressable>
       </ScrollView>
     </CustomModal>
   );
@@ -77,6 +83,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: "10%",
     paddingBottom: "10%",
+  },
+  background: {
+    width: "100%",
+    minHeight: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   option: {
     backgroundColor: "white",
