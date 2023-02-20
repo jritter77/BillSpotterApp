@@ -20,7 +20,11 @@ const BillInfo = (props) => {
   const BillHeader = () => (
     <Pressable style={styles.header} onPress={() => setCollapsed(!collapsed)}>
       <Text style={styles.headerText}>{billName}</Text>
-      <Text style={styles.headerText}>{collapsed ? "+" : "-"}</Text>
+
+      <Text style={styles.headerText}>
+        {billDue.month}/{billDue.date}/{billDue.year % 100} &nbsp; &nbsp;
+        {collapsed ? "+" : "-"}
+      </Text>
     </Pressable>
   );
 
