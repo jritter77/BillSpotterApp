@@ -148,7 +148,6 @@ const Col = ({ date, monthBills, today }) => {
         style={{
           ...styles.date,
           ...styles.dateText,
-          ...getHighlight(date, today, dateBills),
         }}
       >
         {date}
@@ -245,9 +244,11 @@ const ModalDate = ({ bill }) => {
 
   return (
     <View style={styles.modalDate}>
-      <Text>{bill.billName}</Text>
+      <Text style={{ ...styles.modalDateField, textAlign: "left" }}>
+        {bill.billName}
+      </Text>
       <Text style={styles.modalDateField}>${bill.billAmt}</Text>
-      <Text>{status}</Text>
+      <Text style={styles.modalDateField}>{status}</Text>
     </View>
   );
 };
@@ -262,13 +263,16 @@ function getHighlight(day, today, dateBills) {
   for (let b of dateBills) {
     if (parseInt(b.billDue.date) === day) {
       if (b.billPaid) {
-        highlight = styles.paid;
+        if (highlight.backgroundColor !== "black") {
+          highlight = styles.paid;
+        }
       } else if (
         b.billDue.year < today.year ||
         parseInt(b.billDue.month) - 1 < today.month ||
         parseInt(b.billDue.date) < today.date
       ) {
         highlight = styles.pastDue;
+        break;
       } else {
         highlight = styles.due;
       }
@@ -372,6 +376,5 @@ const styles = StyleSheet.create({
   modalDateField: {
     flex: 1,
     textAlign: "right",
-    marginRight: "10%",
   },
 });

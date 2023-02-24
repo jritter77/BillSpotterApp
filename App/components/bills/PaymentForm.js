@@ -28,11 +28,23 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
 
     const bills = await getStoredBills();
 
+    const index = bills.findIndex(
+      (e) =>
+        e.billName === bill.billName &&
+        e.billDue.date === bill.billDue.date &&
+        e.billDue.month === bill.billDue.month &&
+        e.billDue.year === bill.billDue.year
+    );
+
+    console.log(index);
+
     bills[index] = {
       ...bills[index],
       billPaid,
       billAmtPaid,
     };
+
+    console.log(bills);
 
     const newBill = generateNewBill(bills[index]);
     const exists = bills.filter((e) => {
