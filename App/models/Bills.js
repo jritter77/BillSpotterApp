@@ -66,6 +66,49 @@ export function generateNewBill(prevBill) {
   return newBill;
 }
 
+export function projectWeeklyBills(monthBills) {
+  const projectList = {};
+  const projectedBills = [];
+
+  for (let bill of monthBills) {
+    if (bill.billFreq === "Weekly") {
+      if (projectList[bill.billName] !== undefined) {
+        if (
+          parseInt(projectList[bill.billName].billDue.date) <
+          parseInt(bill.billDue.date)
+        ) {
+          projectList[bill.billName] = bill;
+        }
+      } else {
+        projectList[bill.billName] = bill;
+      }
+    }
+  }
+
+  for (let bill in projectList) {
+    const date = new Date();
+
+    date.setDate(parseInt(projectList[bill].billDue.date));
+    date.setMonth(parseInt(projectList[bill].billDue.month) - 1);
+    date.setFullYear(projectList[bill].billDue.year);
+
+    date.setDate(date.getDate() + 7);
+
+    while (date.getMonth() + 1 === parseInt(projectList[bill].billDue.month)) {
+      const newBill = { ...projectList[bill] };
+      newBill.billDue.date = date.getDate().toString().padStart(2, 0);
+      newBill.billPaid = null;
+      newBill.billAmtPaid = null;
+
+      projectedBills.push(JSON.parse(JSON.stringify(newBill)));
+
+      date.setDate(date.getDate() + 7);
+    }
+  }
+
+  return projectedBills;
+}
+
 export async function getMonthTotals(year, month) {
   const totals = {};
   let bills = await getStoredBills();
@@ -73,6 +116,9 @@ export async function getMonthTotals(year, month) {
   bills = bills?.filter(
     (b) => b.billDue.year === year && parseFloat(b.billDue.month) - 1 === month
   );
+
+  // Insert projected bills for month if any
+  bills = [...bills, ...projectWeeklyBills(bills)];
 
   for (let bill of bills) {
     if (bill.billType in totals) {

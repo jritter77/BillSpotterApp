@@ -36,15 +36,11 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
         e.billDue.year === bill.billDue.year
     );
 
-    console.log(index);
-
     bills[index] = {
       ...bills[index],
       billPaid,
       billAmtPaid,
     };
-
-    console.log(bills);
 
     const newBill = generateNewBill(bills[index]);
     const exists = bills.filter((e) => {
