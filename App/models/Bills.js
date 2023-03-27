@@ -66,6 +66,16 @@ export function generateNewBill(prevBill) {
   return newBill;
 }
 
+export async function getMonthBills(year, month) {
+  let bills = await getStoredBills();
+
+  bills = bills?.filter(
+    (b) => b.billDue.year === year && parseFloat(b.billDue.month) - 1 === month
+  );
+
+  return bills;
+}
+
 export function projectWeeklyBills(monthBills) {
   const projectList = {};
   const projectedBills = [];
@@ -111,11 +121,7 @@ export function projectWeeklyBills(monthBills) {
 
 export async function getMonthTotals(year, month) {
   const totals = {};
-  let bills = await getStoredBills();
-
-  bills = bills?.filter(
-    (b) => b.billDue.year === year && parseFloat(b.billDue.month) - 1 === month
-  );
+  let bills = await getMonthBills(year, month);
 
   // Insert projected bills for month if any
   bills = [...bills, ...projectWeeklyBills(bills)];

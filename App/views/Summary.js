@@ -4,6 +4,7 @@ import CustomScrollView from "../components/standard/CustomScrollView";
 import BarGraph from "../components/summary/BarGraph";
 import Bubble from "../components/standard/Bubble";
 import { getMonthTotals } from "../models/Bills";
+import MonthSummary from "../components/summary/MonthSummary";
 
 const Summary = ({ bills }) => {
   const [totalDue, setTotalDue] = React.useState(0);
@@ -32,7 +33,7 @@ const Summary = ({ bills }) => {
 
   return (
     <CustomScrollView>
-      <Bubble title={"Month Summary"}>
+      <Bubble title={"Month Totals"}>
         <BarGraph bills={bills} />
         <View style={styles.row}>
           <View style={styles.col}>
@@ -55,6 +56,7 @@ const Summary = ({ bills }) => {
           </View>
         </View>
       </Bubble>
+      <MonthSummary bill={bills} />
     </CustomScrollView>
   );
 };
