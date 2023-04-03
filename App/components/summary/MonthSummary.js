@@ -48,7 +48,7 @@ const Entry = ({ bill }) => {
         {bill.billName}
       </Text>
       <Text style={styles.text}>${bill.billAmt}</Text>
-      <Text style={styles.text}>
+      <Text style={{ ...styles.text, color: "green" }}>
         {bill.billAmtPaid ? "$" : ""}
         {bill.billAmtPaid}
       </Text>

@@ -54,7 +54,7 @@ const faqs = [
     question: "How does BillSpotter store my bill information?",
     answer:
       "BillSpotter saves all bill information to the user's device only.\n\n" +
-      "BillSpotter does not store any information remotely and information cannot be transfered between devices.",
+      "BillSpotter does not store any information remotely.",
   },
 ];
 

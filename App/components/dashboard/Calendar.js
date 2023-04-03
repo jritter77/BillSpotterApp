@@ -138,6 +138,11 @@ const Col = ({ date, monthBills, today }) => {
           style={styles.dateModalContainer}
           onPress={() => setModalVisible(!modalVisible)}
         >
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalHeaderText}>Bill Name</Text>
+            <Text style={styles.modalHeaderText}>Amt Due</Text>
+            <Text style={styles.modalHeaderText}>Status</Text>
+          </View>
           {populateDateBills()}
         </Pressable>
       </CustomModal>
@@ -377,5 +382,19 @@ const styles = StyleSheet.create({
   modalDateField: {
     flex: 1,
     textAlign: "right",
+  },
+  modalHeader: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    width: "70%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
+    paddingTop: "5%",
+    justifyContent: "space-between",
+    borderColor: "black",
+    borderBottomWidth: 2,
+  },
+  modalHeaderText: {
+    fontWeight: "bold",
   },
 });
