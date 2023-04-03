@@ -10,6 +10,7 @@ import {
   getStoredBills,
   setStoredBills,
 } from "../../models/Bills";
+import { ToastContext } from "../standard/Toast";
 
 const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
   const d = new Date();
@@ -20,6 +21,8 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
   });
   const [billAmtPaid, setBillAmtPaid] = React.useState(bill.billAmt);
   const [feedback, setFeedback] = React.useState("");
+
+  const setToast = React.useContext(ToastContext);
 
   const onSubmit = async () => {
     if (!verifyInput()) {
@@ -58,6 +61,7 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
     await setStoredBills(bills);
     setBills(bills);
     setModalVisible(false);
+    setToast("Bill Payment Confirmed");
   };
 
   const verifyInput = () => {
