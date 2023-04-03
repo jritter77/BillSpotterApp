@@ -148,6 +148,7 @@ const Col = ({ date, monthBills, today }) => {
         style={{
           ...styles.date,
           ...styles.dateText,
+          ...getHighlight(date, today, dateBills),
         }}
       >
         {date}

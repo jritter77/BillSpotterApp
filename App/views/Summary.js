@@ -56,7 +56,7 @@ const Summary = ({ bills }) => {
           </View>
         </View>
       </Bubble>
-      <MonthSummary bill={bills} />
+      <MonthSummary bills={bills} />
     </CustomScrollView>
   );
 };

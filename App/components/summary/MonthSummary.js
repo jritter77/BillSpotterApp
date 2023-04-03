@@ -30,9 +30,7 @@ const MonthSummary = ({ bills }) => {
 const Entry = ({ bill }) => {
   return (
     <View style={styles.entry}>
-      <Text style={{ flex: 1 }}>
-        {bill.billDue.month}/{bill.billDue.date}/{bill.billDue.year % 100}
-      </Text>
+      <Text style={{ flex: 1 }}>{bill.billDue.date}</Text>
       <Text numberOfLines={1} style={{ flex: 1 }}>
         {bill.billName}
       </Text>
