@@ -86,7 +86,7 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
         <PickerInput
           value={billType}
           setValue={setBillType}
-          options={["Home", "Auto", "Medical"]}
+          options={["Home", "Auto", "Medical", "Credit Card", "Loan", "Other"]}
         />
         <Text style={styles.label}>Bill Frequency</Text>
         <PickerInput

@@ -24,18 +24,34 @@ const MonthSummary = ({ bills }) => {
     populateEntries();
   }, [bills]);
 
-  return <Bubble title={"Month Summary"}>{entries}</Bubble>;
+  return (
+    <Bubble title={"Month Summary"}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Due </Text>
+        <Text style={styles.headerText}>Bill Name</Text>
+        <Text style={styles.headerText}>Amt Due</Text>
+        <Text style={styles.headerText}>Amt Paid</Text>
+      </View>
+      <View style={styles.hr}></View>
+      {entries}
+    </Bubble>
+  );
 };
 
 const Entry = ({ bill }) => {
   return (
     <View style={styles.entry}>
-      <Text style={{ flex: 1 }}>{bill.billDue.date}</Text>
-      <Text numberOfLines={1} style={{ flex: 1 }}>
+      <Text style={styles.text}>
+        {bill.billDue.month}/{bill.billDue.date}
+      </Text>
+      <Text numberOfLines={1} style={styles.text}>
         {bill.billName}
       </Text>
-      <Text style={{ flex: 1 }}>{bill.billAmt}</Text>
-      <Text style={{ flex: 1 }}>{bill.billAmtPaid}</Text>
+      <Text style={styles.text}>${bill.billAmt}</Text>
+      <Text style={styles.text}>
+        {bill.billAmtPaid ? "$" : ""}
+        {bill.billAmtPaid}
+      </Text>
     </View>
   );
 };
@@ -45,5 +61,22 @@ export default MonthSummary;
 const styles = StyleSheet.create({
   entry: {
     flexDirection: "row",
+  },
+  header: {
+    flexDirection: "row",
+  },
+  text: {
+    flex: 1,
+    margin: 4,
+  },
+  headerText: {
+    flex: 1,
+    fontWeight: "bold",
+    margin: 4,
+  },
+  hr: {
+    height: 1,
+    backgroundColor: "black",
+    margin: 4,
   },
 });
