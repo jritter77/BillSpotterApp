@@ -6,6 +6,7 @@ import { getBillTotals, sortByDate } from "../../models/Bills";
 
 const NextDue = ({ bills, setBills }) => {
   const [limit, setLimit] = React.useState(3);
+  const [showMoreVisible, setShowMoreVisible] = React.useState(false);
 
   const populateDueBills = () => {
     const dueBills = [];
@@ -25,10 +26,18 @@ const NextDue = ({ bills, setBills }) => {
     return dueBills;
   };
 
+  React.useEffect(() => {
+    if (bills.filter((e) => e.billAmtPaid === null).length > limit) {
+      setShowMoreVisible(true);
+    } else {
+      setShowMoreVisible(false);
+    }
+  }, [bills, limit]);
+
   return (
     <Bubble title={"Next Due Bills"}>
       {populateDueBills()}
-      {bills.length > 0 && (
+      {showMoreVisible && (
         <TouchableOpacity
           style={styles.btn}
           onPress={() => setLimit(limit + 3)}
@@ -36,7 +45,7 @@ const NextDue = ({ bills, setBills }) => {
           <Text style={styles.btnText}>Show More</Text>
         </TouchableOpacity>
       )}
-      {!bills.length && (
+      {!bills.filter((e) => e.billAmtPaid === null).length && (
         <Text style={styles.noBills}>
           {
             "You do not currently have any upcoming payments.\n\nYou can create a new bill from the My Bills page."

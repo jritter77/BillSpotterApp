@@ -21,7 +21,7 @@ const MyBills = ({ bills, setBills }) => {
   return (
     <CustomScrollView>
       {populateBills()}
-      {!bills.length && (
+      {!bills.filter((e) => e.billAmtPaid === null).length && (
         <Bubble title="No Bills">
           <Text style={styles.noBills}>
             {

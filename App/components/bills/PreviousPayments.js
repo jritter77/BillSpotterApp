@@ -6,14 +6,14 @@ import Payment from "./Payment";
 
 const PreviousPayments = ({ bills, setBills }) => {
   const [limit, setLimit] = React.useState(bills.length > 3 ? 3 : bills.length);
-  let showMoreVisible = false;
+  const [showMoreVisible, setShowMoreVisible] = React.useState(false);
 
   const populatePrevPayments = () => {
-    const dueBills = [];
+    const prevPayments = [];
 
     for (let i = bills.length - 1; i >= 0; i--) {
       if (bills[i].billPaid) {
-        dueBills.push(
+        prevPayments.push(
           <Payment
             key={i}
             bill={bills[i]}
@@ -23,23 +23,28 @@ const PreviousPayments = ({ bills, setBills }) => {
           />
         );
 
-        if (dueBills.length >= limit) {
-          showMoreVisible = true;
+        if (prevPayments.length >= limit) {
           break;
         }
       }
     }
 
-    showMoreVisible = false;
-
-    return dueBills;
+    return prevPayments;
   };
+
+  React.useEffect(() => {
+    if (bills.filter((e) => e.billAmtPaid !== null).length > limit) {
+      setShowMoreVisible(true);
+    } else {
+      setShowMoreVisible(false);
+    }
+  }, [bills, limit]);
 
   return (
     <Bubble title={"Previous Payments"}>
       {populatePrevPayments()}
 
-      {bills.length > 0 && (
+      {showMoreVisible && (
         <TouchableOpacity
           style={styles.btn}
           onPress={() => setLimit(limit + 3)}
@@ -47,7 +52,7 @@ const PreviousPayments = ({ bills, setBills }) => {
           <Text style={styles.btnText}>Show More</Text>
         </TouchableOpacity>
       )}
-      {!bills.length && (
+      {!bills.filter((e) => e.billAmtPaid !== null).length && (
         <Text style={styles.noBills}>
           {"You do not currently have any previous payments to display."}
         </Text>
