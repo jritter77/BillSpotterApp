@@ -78,11 +78,11 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <CustomForm onSubmit={onSubmit} title={"Confirm Paid"}>
         <Text style={styles.heading}>Payment Details</Text>
-        <Text style={styles.label}>Bill Name</Text>
+        <Text style={styles.label}>Name</Text>
         <Text style={styles.text}>{bill.billName}</Text>
-        <Text style={styles.label}>Bill Type</Text>
+        <Text style={styles.label}>Type</Text>
         <Text style={styles.text}>{bill.billType}</Text>
-        <Text style={styles.label}>Date Due</Text>
+        <Text style={styles.label}>Due</Text>
         <Text style={styles.text}>
           {bill.billDue.month}/{bill.billDue.date}/{bill.billDue.year}
         </Text>

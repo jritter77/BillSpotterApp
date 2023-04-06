@@ -9,6 +9,7 @@ import {
   getStoredBills,
   setStoredBills,
 } from "../../models/Bills";
+import { ToastContext } from "../standard/Toast";
 
 const BillForm = ({ setModalVisible, setBills, bill, index }) => {
   const [billName, setBillName] = React.useState("");
@@ -17,6 +18,8 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
   const [billDue, setBillDue] = React.useState(bill?.billDue);
   const [billAmt, setBillAmt] = React.useState("0.00");
   const [feedback, setFeedback] = React.useState("");
+
+  const setToast = React.useContext(ToastContext);
 
   const onSubmit = async () => {
     if (!verifyInput()) {
@@ -47,6 +50,7 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
     await setStoredBills(bills);
     setBills(bills);
     setModalVisible(false);
+    setToast("Bill Saved");
   };
 
   const verifyInput = () => {
@@ -76,27 +80,27 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <CustomForm onSubmit={onSubmit} title={"Save Changes"}>
         <Text style={styles.heading}>Bill Details</Text>
-        <Text style={styles.label}>Bill Name</Text>
+        <Text style={styles.label}>Name</Text>
         <FormTextInput
           placeholder="Name of bill"
           value={billName}
           onChangeText={setBillName}
         />
-        <Text style={styles.label}>Bill Type</Text>
+        <Text style={styles.label}>Type</Text>
         <PickerInput
           value={billType}
           setValue={setBillType}
           options={["Home", "Auto", "Medical", "Credit Card", "Loan", "Other"]}
         />
-        <Text style={styles.label}>Bill Frequency</Text>
+        <Text style={styles.label}>Frequency</Text>
         <PickerInput
           value={billFreq}
           setValue={setBillFreq}
           options={["One-Time", "Weekly", "Monthly", "Yearly"]}
         />
-        <Text style={styles.label}>Bill Due Date</Text>
+        <Text style={styles.label}>Due Date</Text>
         <DatePicker value={billDue} setValue={setBillDue} />
-        <Text style={styles.label}>Bill Amount Due</Text>
+        <Text style={styles.label}>Amount Due</Text>
         <View style={styles.row}>
           <Text style={styles.dollar}>$</Text>
           <FormTextInput

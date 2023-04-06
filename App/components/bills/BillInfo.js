@@ -10,12 +10,15 @@ import { getStoredBills, setStoredBills } from "../../models/Bills";
 import CustomModal from "../standard/CustomModal";
 import BillForm from "./BillForm";
 import CustomAlert from "../standard/CustomAlert";
+import { ToastContext } from "../standard/Toast";
 
 const BillInfo = (props) => {
   const [collapsed, setCollapsed] = React.useState(true);
   const [modalVisible, setModalVisible] = React.useState(false);
   const { index, setBills, bill } = props;
   const { billName, billType, billFreq, billDue, billAmt } = bill;
+
+  const setToast = React.useContext(ToastContext);
 
   const BillHeader = () => (
     <Pressable style={styles.header} onPress={() => setCollapsed(!collapsed)}>
@@ -61,6 +64,7 @@ const BillInfo = (props) => {
     bills.splice(index, 1);
     await setStoredBills(bills);
     setBills(await getStoredBills());
+    setToast("Bill Removed");
   }
 
   return (
@@ -69,23 +73,23 @@ const BillInfo = (props) => {
       <View style={{ display: collapsed ? "none" : "flex" }}>
         <View style={styles.row}>
           <View style={styles.col}>
-            <Text style={styles.label}>Bill Type:</Text>
+            <Text style={styles.label}>Type:</Text>
             <Text>{billType}</Text>
           </View>
           <View style={styles.col}>
-            <Text style={styles.label}>Bill Frequency:</Text>
+            <Text style={styles.label}>Frequency:</Text>
             <Text>{billFreq}</Text>
           </View>
         </View>
         <View style={styles.row}>
           <View style={styles.col}>
-            <Text style={styles.label}>Bill Due Date:</Text>
+            <Text style={styles.label}>Due Date:</Text>
             <Text>
               {billDue.month}/{billDue.date}/{billDue.year}
             </Text>
           </View>
           <View style={styles.col}>
-            <Text style={styles.label}>Bill Amount Due:</Text>
+            <Text style={styles.label}>Amount Due:</Text>
             <Text>${billAmt}</Text>
           </View>
         </View>

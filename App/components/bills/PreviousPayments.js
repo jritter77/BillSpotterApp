@@ -8,7 +8,7 @@ const PreviousPayments = ({ bills, setBills }) => {
   const [limit, setLimit] = React.useState(bills.length > 3 ? 3 : bills.length);
   let showMoreVisible = false;
 
-  const populateDueBills = () => {
+  const populatePrevPayments = () => {
     const dueBills = [];
 
     for (let i = 0; i < bills.length; i++) {
@@ -37,7 +37,7 @@ const PreviousPayments = ({ bills, setBills }) => {
 
   return (
     <Bubble title={"Previous Payments"}>
-      {populateDueBills()}
+      {populatePrevPayments()}
 
       {bills.length > 0 && (
         <TouchableOpacity

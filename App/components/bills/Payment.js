@@ -9,13 +9,17 @@ import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { setStoredBills } from "../../models/Bills";
 import CustomAlert from "../standard/CustomAlert";
+import { ToastContext } from "../standard/Toast";
 
 const Payment = ({ bill, bills, setBills, index }) => {
+  const setToast = React.useContext(ToastContext);
+
   const handleDelete = async () => {
     bills[index].billPaid = null;
     bills[index].billAmtPaid = null;
     setBills([...bills]);
     await setStoredBills(bills);
+    setToast("Payment Removed");
   };
 
   return (
