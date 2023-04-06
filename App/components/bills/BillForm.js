@@ -10,6 +10,7 @@ import {
   setStoredBills,
 } from "../../models/Bills";
 import { ToastContext } from "../standard/Toast";
+import CustomAlert from "../standard/CustomAlert";
 
 const BillForm = ({ setModalVisible, setBills, bill, index }) => {
   const [billName, setBillName] = React.useState("");
@@ -26,31 +27,37 @@ const BillForm = ({ setModalVisible, setBills, bill, index }) => {
       return;
     }
 
-    const bills = await getStoredBills();
-    if (!bill) {
-      const newBill = createNewBill(
-        billName,
-        billType,
-        billFreq,
-        billDue,
-        billAmt
-      );
-      bills.unshift(newBill);
-    } else {
-      bills[index] = {
-        ...bills[index],
-        billName,
-        billType,
-        billFreq,
-        billDue,
-        billAmt,
-      };
-    }
+    CustomAlert(
+      "Confirm Changes",
+      "Save all changes to " + billName + "?",
+      async () => {
+        const bills = await getStoredBills();
+        if (!bill) {
+          const newBill = createNewBill(
+            billName,
+            billType,
+            billFreq,
+            billDue,
+            billAmt
+          );
+          bills.unshift(newBill);
+        } else {
+          bills[index] = {
+            ...bills[index],
+            billName,
+            billType,
+            billFreq,
+            billDue,
+            billAmt,
+          };
+        }
 
-    await setStoredBills(bills);
-    setBills(bills);
-    setModalVisible(false);
-    setToast("Bill Saved");
+        await setStoredBills(bills);
+        setBills(bills);
+        setModalVisible(false);
+        setToast("Bill Saved");
+      }
+    );
   };
 
   const verifyInput = () => {

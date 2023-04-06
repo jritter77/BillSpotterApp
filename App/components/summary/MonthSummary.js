@@ -28,7 +28,7 @@ const MonthSummary = ({ bills }) => {
     <Bubble title={"Month Summary"}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Due </Text>
-        <Text style={styles.headerText}>Bill Name</Text>
+        <Text style={{ ...styles.headerText, flex: 1 }}>Bill Name</Text>
         <Text style={styles.headerText}>Amt Due</Text>
         <Text style={styles.headerText}>Amt Paid</Text>
       </View>
@@ -41,10 +41,13 @@ const MonthSummary = ({ bills }) => {
 const Entry = ({ bill }) => {
   return (
     <View style={styles.entry}>
-      <Text style={styles.text}>
+      <Text style={{ ...styles.text, width: "auto", color: "grey" }}>
         {bill.billDue.month}/{bill.billDue.date}
       </Text>
-      <Text numberOfLines={1} style={styles.text}>
+      <Text
+        numberOfLines={1}
+        style={{ ...styles.text, flex: 1, fontWeight: "bold" }}
+      >
         {bill.billName}
       </Text>
       <Text style={styles.text}>${bill.billAmt}</Text>
@@ -66,12 +69,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   text: {
-    flex: 1,
+    width: "20%",
     margin: 4,
   },
   headerText: {
-    flex: 1,
     fontWeight: "bold",
+    width: "20%",
     margin: 4,
   },
   hr: {

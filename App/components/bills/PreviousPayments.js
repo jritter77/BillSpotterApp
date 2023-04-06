@@ -11,7 +11,7 @@ const PreviousPayments = ({ bills, setBills }) => {
   const populatePrevPayments = () => {
     const dueBills = [];
 
-    for (let i = 0; i < bills.length; i++) {
+    for (let i = bills.length - 1; i >= 0; i--) {
       if (bills[i].billPaid) {
         dueBills.push(
           <Payment

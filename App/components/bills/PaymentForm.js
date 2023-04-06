@@ -11,6 +11,7 @@ import {
   setStoredBills,
 } from "../../models/Bills";
 import { ToastContext } from "../standard/Toast";
+import CustomAlert from "../standard/CustomAlert";
 
 const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
   const d = new Date();
@@ -29,39 +30,45 @@ const PaymentForm = ({ setModalVisible, setBills, bill, index }) => {
       return;
     }
 
-    const bills = await getStoredBills();
+    CustomAlert(
+      "Confirm Payment",
+      "Mark bill as paid with entered information?",
+      async () => {
+        const bills = await getStoredBills();
 
-    const index = bills.findIndex(
-      (e) =>
-        e.billName === bill.billName &&
-        e.billDue.date === bill.billDue.date &&
-        e.billDue.month === bill.billDue.month &&
-        e.billDue.year === bill.billDue.year
+        const index = bills.findIndex(
+          (e) =>
+            e.billName === bill.billName &&
+            e.billDue.date === bill.billDue.date &&
+            e.billDue.month === bill.billDue.month &&
+            e.billDue.year === bill.billDue.year
+        );
+
+        bills[index] = {
+          ...bills[index],
+          billPaid,
+          billAmtPaid,
+        };
+
+        const newBill = generateNewBill(bills[index]);
+        const exists = bills.filter((e) => {
+          return (
+            e.billName === newBill.billName &&
+            e.billDue.month === newBill.billDue.month &&
+            e.billDue.date === newBill.billDue.date
+          );
+        });
+
+        if (!exists.length) {
+          bills.push(newBill);
+        }
+
+        await setStoredBills(bills);
+        setBills(bills);
+        setModalVisible(false);
+        setToast("Bill Payment Confirmed");
+      }
     );
-
-    bills[index] = {
-      ...bills[index],
-      billPaid,
-      billAmtPaid,
-    };
-
-    const newBill = generateNewBill(bills[index]);
-    const exists = bills.filter((e) => {
-      return (
-        e.billName === newBill.billName &&
-        e.billDue.month === newBill.billDue.month &&
-        e.billDue.date === newBill.billDue.date
-      );
-    });
-
-    if (!exists.length) {
-      bills.push(newBill);
-    }
-
-    await setStoredBills(bills);
-    setBills(bills);
-    setModalVisible(false);
-    setToast("Bill Payment Confirmed");
   };
 
   const verifyInput = () => {
