@@ -2,7 +2,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Bubble from "../standard/Bubble";
 import DueBill from "./DueBill";
-import { getBillTotals, sortByDate } from "../../models/Bills";
 
 const NextDue = ({ bills, setBills }) => {
   const [limit, setLimit] = React.useState(3);
