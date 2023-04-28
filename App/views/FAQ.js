@@ -1,8 +1,11 @@
 import {
+  Button,
+  Linking,
   Pressable,
   StyleSheet,
   Text,
   Touchable,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -69,7 +72,21 @@ const FAQ = () => {
     return questions;
   };
 
-  return <CustomScrollView>{populateFaqs()}</CustomScrollView>;
+  return (
+    <CustomScrollView>
+      {populateFaqs()}
+      <TouchableOpacity
+        style={styles.privacyBtn}
+        onPress={() =>
+          Linking.openURL(
+            "https://www.privacypolicies.com/live/293bc9e7-9252-4ee1-a5f2-88234126f75a"
+          )
+        }
+      >
+        <Text style={styles.privacyText}>Privacy Policy</Text>
+      </TouchableOpacity>
+    </CustomScrollView>
+  );
 };
 
 const Question = ({ faq }) => {
@@ -117,5 +134,17 @@ const styles = StyleSheet.create({
   questionText: {
     fontSize: 16,
     padding: "5%",
+  },
+  privacyBtn: {
+    backgroundColor: "black",
+    padding: 16,
+    borderRadius: 5,
+    marginTop: "10%",
+    margin: "5%",
+  },
+  privacyText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
